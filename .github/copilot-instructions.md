@@ -6,6 +6,11 @@ This repository is the **CraftPG monorepo**, containing:
 - `/front-end` — Next.js application
 - `docker-compose.yml` — Local infrastructure (Postgres, Keycloak, Minio, Mailhog)
 
+## Instruction precedence
+
+- Treat this root-level file as the primary source of truth for Copilot review behaviour.
+- If guidance here conflicts with `back-end/.github/copilot-instructions.md` or `front-end/.github/copilot-instructions.md`, prefer the instructions in this file.
+- For technology and dependency versions (for example, Spring Boot), always treat the build configuration files (such as the backend `pom.xml`) as authoritative if they differ from any Copilot instruction text.
 ## Code Review Guidelines
 
 When reviewing pull requests, please:
