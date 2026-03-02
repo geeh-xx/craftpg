@@ -37,7 +37,7 @@ public class SessionController implements SessionsApi {
     }
 
     @Override
-    public ResponseEntity<SessionResponse> campaignsCampaignIdSessionsSessionIdPatch(
+    public ResponseEntity<SessionResponse> campaignsCampaignIdSessionsSessionIdPut(
         @NonNull final UUID campaignId,
         @NonNull final UUID sessionId,
         @NonNull final UpdateSessionRequest updateSessionRequest

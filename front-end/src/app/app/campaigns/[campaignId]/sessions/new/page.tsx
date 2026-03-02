@@ -93,10 +93,9 @@ export default async function CreateSessionPage({ params }: { params: Params }) 
             </TabItem>
           </Tabs>
 
-          <div className="flex gap-2">
-            <Button href={`/app/campaigns/${campaignId}`} color="light">Cancel</Button>
-            <Button type="submit">Create Session</Button>
-          </div>
+          <Button type="submit" className="w-full bg-blue-600 py-3 text-3xl font-semibold text-white hover:bg-blue-700">
+            Salvar sessão
+          </Button>
         </form>
       </Card>
     </section>

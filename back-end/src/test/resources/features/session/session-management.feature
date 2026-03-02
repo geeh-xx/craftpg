@@ -27,4 +27,4 @@ Feature: Session HTTP Routes
     Examples:
       | method | path                                                                                                   | payload        | status |
       | GET    | /campaigns/11111111-1111-1111-1111-111111111111/sessions                                              | none           | 401    |
-      | PATCH  | /campaigns/11111111-1111-1111-1111-111111111111/sessions/44444444-4444-4444-4444-444444444444        | update-session | 401    |
+      | PUT    | /campaigns/11111111-1111-1111-1111-111111111111/sessions/44444444-4444-4444-4444-444444444444        | update-session | 401    |

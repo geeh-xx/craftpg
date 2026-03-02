@@ -52,7 +52,8 @@ public class InviteController implements InvitesApi {
 
     @Override
     public ResponseEntity<InvitePreviewResponse> invitesTokenGet(@NonNull final String token) {
-        return ResponseEntity.ok(inviteMapper.toPreviewResponse(getInviteByTokenUsecase.execute(token)));
+        var previewData = getInviteByTokenUsecase.execute(token);
+        return ResponseEntity.ok(inviteMapper.toPreviewResponse(previewData));
     }
 
     @Override

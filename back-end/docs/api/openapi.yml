@@ -301,9 +301,9 @@ paths:
                 $ref: '#/components/schemas/SessionResponse'
 
   /campaigns/{campaignId}/sessions/{sessionId}:
-    patch:
+    put:
       tags: [Sessions]
-      operationId: campaignsCampaignIdSessionsSessionIdPatch
+      operationId: campaignsCampaignIdSessionsSessionIdPut
       parameters:
         - in: path
           name: campaignId
@@ -494,9 +494,11 @@ components:
 
     InvitePreviewResponse:
       type: object
-      required: [campaignId, email, roles, expiresAt, accepted]
+      required: [campaignId, campaignTitle, dmName, email, roles, expiresAt, accepted]
       properties:
         campaignId: { type: string, format: uuid }
+        campaignTitle: { type: string }
+        dmName: { type: string }
         email: { type: string }
         roles:
           type: array

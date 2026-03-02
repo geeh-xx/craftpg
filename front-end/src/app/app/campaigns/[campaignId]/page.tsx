@@ -303,7 +303,18 @@ export default async function CampaignDetailPage({ params }: { params: Params })
                     <TableCell>{session.title}</TableCell>
                     <TableCell>—</TableCell>
                     <TableCell>
-                      <span className="text-sm text-slate-600">Edit below</span>
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          href={`/app/campaigns/${campaignId}/sessions/${session.id}/edit`}
+                          color="blue"
+                          size="xs"
+                        >
+                          Editar informações da sessão
+                        </Button>
+                        <Button color="light" size="xs" disabled>
+                          Iniciar sessão
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

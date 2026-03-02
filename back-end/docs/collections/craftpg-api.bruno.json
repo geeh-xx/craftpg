@@ -234,7 +234,7 @@
         {
           "name": "Update",
           "request": {
-            "method": "PATCH",
+            "method": "PUT",
             "url": "{{baseUrl}}/campaigns/{{campaignId}}/sessions/{{sessionId}}",
             "headers": [
               { "name": "Authorization", "value": "Bearer {{token}}" },

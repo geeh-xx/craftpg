@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 
 type InvitePreview = {
   campaignId: string;
+  campaignTitle: string;
+  dmName: string;
   email: string;
   roles: string[];
   expiresAt: string;
@@ -47,7 +49,8 @@ export default async function InvitePage({ params }: { params: Promise<{ token: 
       <div className="space-y-4">
         <Card>
           <h1 className="text-2xl font-semibold">Invite Acceptance</h1>
-          <p>Campaign: {preview.campaignId}</p>
+          <p>Campaign: {preview.campaignTitle}</p>
+          <p>DM: {preview.dmName}</p>
           <p>Roles assigned: {preview.roles.join(", ")}</p>
           <p>Expiration date: {new Date(preview.expiresAt).toLocaleString()}</p>
         </Card>

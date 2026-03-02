@@ -81,8 +81,12 @@ export default async function CharactersPage() {
             <TextInput id="attributesJson" name="attributesJson" defaultValue="{}" />
           </div>
           <div className="md:col-span-2 flex gap-3">
-            <Button type="submit">Create manually</Button>
-            <Button type="submit" formAction={generateRandomCharacter} color="light">Generate random</Button>
+            <Button type="submit" color="blue" className="flex-1">
+              Salvar
+            </Button>
+            <Button type="submit" formAction={generateRandomCharacter} color="light" className="flex-1">
+              Generate random
+            </Button>
           </div>
         </form>
       </Card>

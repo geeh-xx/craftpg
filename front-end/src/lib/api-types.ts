@@ -18,6 +18,8 @@ export type CharacterBase = {
 
 export type InvitePreview = {
   campaignId: string;
+  campaignTitle: string;
+  dmName: string;
   email: string;
   roles: string[];
   expiresAt: string;

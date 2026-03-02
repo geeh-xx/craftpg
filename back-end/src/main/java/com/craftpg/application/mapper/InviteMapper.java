@@ -1,6 +1,7 @@
 package com.craftpg.application.mapper;
 
 import com.craftpg.domain.model.CampaignInvite;
+import com.craftpg.application.usecase.invite.getinvitebytoken.InvitePreviewData;
 import com.craftpg.infrastructure.web.dto.CampaignIdResponse;
 import com.craftpg.infrastructure.web.dto.InvitePreviewResponse;
 import com.craftpg.infrastructure.web.dto.PendingInviteResponse;
@@ -25,9 +26,12 @@ public class InviteMapper {
     }
 
     @NonNull
-    public InvitePreviewResponse toPreviewResponse(@NonNull final CampaignInvite invite) {
+    public InvitePreviewResponse toPreviewResponse(@NonNull final InvitePreviewData previewData) {
+        final CampaignInvite invite = previewData.invite();
         return new InvitePreviewResponse(
             invite.getCampaignId(),
+            previewData.campaignTitle(),
+            previewData.dmName(),
             invite.getEmail(),
             parseRoles(invite.getRolesJson()),
             invite.getExpiresAt(),
