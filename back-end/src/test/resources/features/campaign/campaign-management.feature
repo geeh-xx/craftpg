@@ -13,10 +13,10 @@ Feature: Campaign HTTP Routes
 
     Examples:
       | method | path                                                     | payload         | status |
-      | GET    | /campaigns                         | none            | 400    |
-      | POST   | /campaigns                         | create-campaign | 400    |
-      | GET    | /campaigns/11111111-1111-1111-1111-111111111111         | none            | 400    |
-      | PATCH  | /campaigns/11111111-1111-1111-1111-111111111111         | update-campaign | 400    |
-      | POST   | /campaigns/11111111-1111-1111-1111-111111111111/finish  | none            | 400    |
-      | GET    | /campaigns/11111111-1111-1111-1111-111111111111/permissions | none        | 400    |
-      | DELETE | /campaigns/11111111-1111-1111-1111-111111111111         | none            | 400    |
+      | GET    | /campaigns                                               | none            | 200    |
+      | POST   | /campaigns                                               | create-campaign | 201    |
+      | GET    | /campaigns/11111111-1111-1111-1111-111111111111          | none            | 400    |
+      | PATCH  | /campaigns/11111111-1111-1111-1111-111111111111          | update-campaign | 400    |
+      | POST   | /campaigns/11111111-1111-1111-1111-111111111111/finish   | none            | 400    |
+      | GET    | /campaigns/11111111-1111-1111-1111-111111111111/permissions | none        | 200    |
+      | DELETE | /campaigns/11111111-1111-1111-1111-111111111111          | none            | 400    |

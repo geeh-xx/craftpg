@@ -9,14 +9,21 @@ import org.junit.jupiter.api.Assertions;
 
 public class SessionManagementSteps extends HttpStepSupport {
 
-    private static final String CAMPAIGN_ID_PLACEHOLDER = "{campaignId}";
     private final ObjectMapper objectMapper = new ObjectMapper();
     private String campaignId;
 
     @Given("the session API route {string} {string}")
     public void theSessionApiRoute(final String method, final String path) {
-        setAuthenticated(false);
-        setRoute(method, path);
+        boolean authenticatedRequest = false;
+        String resolvedPath = path;
+
+        if (campaignId != null && !campaignId.isBlank() && path.contains("{campaignId}")) {
+            resolvedPath = path.replace("{campaignId}", campaignId);
+            authenticatedRequest = true;
+        }
+
+        setAuthenticated(authenticatedRequest);
+        setRoute(method, resolvedPath);
     }
 
     @Given("the session request payload template is {string}")
@@ -42,15 +49,6 @@ public class SessionManagementSteps extends HttpStepSupport {
         if (campaignId == null || campaignId.isBlank()) {
             throw new IllegalStateException("Created campaign response does not contain id");
         }
-    }
-
-    @Given("the session API route for the created campaign {string} {string}")
-    public void theSessionApiRouteForTheCreatedCampaign(final String method, final String pathTemplate) {
-        if (campaignId == null || campaignId.isBlank()) {
-            throw new IllegalStateException("Campaign id not prepared for scenario");
-        }
-        setAuthenticated(true);
-        setRoute(method, pathTemplate.replace(CAMPAIGN_ID_PLACEHOLDER, campaignId));
     }
 
     @When("the session client sends the HTTP request")

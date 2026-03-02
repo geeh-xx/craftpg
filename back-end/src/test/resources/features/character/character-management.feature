@@ -12,9 +12,9 @@ Feature: Character HTTP Routes
 
     Examples:
       | method | path                                                   | payload                   | status |
-      | GET    | /characters                                             | none                      | 400    |
-      | POST   | /characters                                             | create-character          | 400    |
-      | POST   | /characters/generate-random                             | none                      | 400    |
+      | GET    | /characters                                             | none                      | 200    |
+      | POST   | /characters                                             | create-character          | 201    |
+      | POST   | /characters/generate-random                             | none                      | 201    |
       | GET    | /campaigns/11111111-1111-1111-1111-111111111111/characters/me | none                | 400    |
       | PATCH  | /campaigns/11111111-1111-1111-1111-111111111111/characters/me | update-campaign-character | 400 |
       | POST   | /campaigns/11111111-1111-1111-1111-111111111111/characters/33333333-3333-3333-3333-333333333333/xp | add-xp | 400 |

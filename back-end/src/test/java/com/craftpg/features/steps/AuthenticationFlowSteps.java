@@ -9,6 +9,13 @@ public class AuthenticationFlowSteps extends HttpStepSupport {
 
     @Given("the authentication API route {string} {string}")
     public void theAuthenticationApiRoute(final String method, final String path) {
+        setAuthenticated(false);
+        setRoute(method, path);
+    }
+
+    @Given("the authenticated authentication API route {string} {string}")
+    public void theAuthenticatedAuthenticationApiRoute(final String method, final String path) {
+        setAuthenticated(true);
         setRoute(method, path);
     }
 

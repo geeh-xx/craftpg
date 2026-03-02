@@ -11,6 +11,8 @@ import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "character_base")
@@ -33,6 +35,7 @@ public class CharacterBase {
     private String clazz;
 
     @Column(name = "attributes_json", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String attributesJson;
 
     @Column(name = "created_at", nullable = false)

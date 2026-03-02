@@ -9,6 +9,7 @@ public class CampaignManagementSteps extends HttpStepSupport {
 
     @Given("the campaign API route {string} {string}")
     public void theCampaignApiRoute(final String method, final String path) {
+        setAuthenticated(true);
         setRoute(method, path);
     }
 
@@ -24,6 +25,7 @@ public class CampaignManagementSteps extends HttpStepSupport {
 
     @Then("the campaign response status is {int}")
     public void theCampaignResponseStatusIs(final Integer status) {
-        Assertions.assertEquals(status.intValue(), getResponseStatus(), () -> "Unexpected status. Body: " + getResponseBody());
+        Assertions.assertEquals(status.intValue(), getResponseStatus(),
+                () -> "Unexpected status. Body: " + getResponseBody());
     }
 }

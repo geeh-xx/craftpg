@@ -12,5 +12,5 @@ Feature: Notification HTTP Routes
 
     Examples:
       | method | path                               | payload | status |
-      | GET    | /notifications                     | none    | 400    |
-      | POST   | /notifications/55555555-5555-5555-5555-555555555555/read | none | 500 |
+      | GET    | /notifications                     | none    | 200    |
+      | POST   | /notifications/55555555-5555-5555-5555-555555555555/read | none | 400 |

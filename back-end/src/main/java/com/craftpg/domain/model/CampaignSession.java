@@ -11,6 +11,8 @@ import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "campaign_session")
@@ -37,18 +39,23 @@ public class CampaignSession {
     private String notes;
 
     @Column(name = "attendance_json", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String attendanceJson;
 
     @Column(name = "xp_json", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String xpJson;
 
     @Column(name = "npcs_json", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String npcsJson;
 
     @Column(name = "maps_json", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String mapsJson;
 
     @Column(name = "treasures_json", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String treasuresJson;
 
     @Column(name = "created_at", nullable = false)

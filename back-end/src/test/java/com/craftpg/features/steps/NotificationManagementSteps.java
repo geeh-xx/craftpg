@@ -9,6 +9,7 @@ public class NotificationManagementSteps extends HttpStepSupport {
 
     @Given("the notification API route {string} {string}")
     public void theNotificationApiRoute(final String method, final String path) {
+        setAuthenticated(true);
         setRoute(method, path);
     }
 
@@ -24,6 +25,7 @@ public class NotificationManagementSteps extends HttpStepSupport {
 
     @Then("the notification response status is {int}")
     public void theNotificationResponseStatusIs(final Integer status) {
-        Assertions.assertEquals(status.intValue(), getResponseStatus(), () -> "Unexpected status. Body: " + getResponseBody());
+        Assertions.assertEquals(status.intValue(), getResponseStatus(),
+                () -> "Unexpected status. Body: " + getResponseBody());
     }
 }

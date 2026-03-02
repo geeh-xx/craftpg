@@ -16,6 +16,9 @@ build:
 test:
 	mvn test
 
+it-test:
+	mvn clean verify -P cucumber
+
 run:
 	mvn spring-boot:run
 

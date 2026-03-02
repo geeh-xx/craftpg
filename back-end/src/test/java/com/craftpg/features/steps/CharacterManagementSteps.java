@@ -9,6 +9,7 @@ public class CharacterManagementSteps extends HttpStepSupport {
 
     @Given("the character API route {string} {string}")
     public void theCharacterApiRoute(final String method, final String path) {
+        setAuthenticated(true);
         setRoute(method, path);
     }
 
@@ -24,6 +25,7 @@ public class CharacterManagementSteps extends HttpStepSupport {
 
     @Then("the character response status is {int}")
     public void theCharacterResponseStatusIs(final Integer status) {
-        Assertions.assertEquals(status.intValue(), getResponseStatus(), () -> "Unexpected status. Body: " + getResponseBody());
+        Assertions.assertEquals(status.intValue(), getResponseStatus(),
+                () -> "Unexpected status. Body: " + getResponseBody());
     }
 }

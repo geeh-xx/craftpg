@@ -11,6 +11,8 @@ import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "campaign_character")
@@ -37,9 +39,11 @@ public class CampaignCharacter {
     private Integer xp;
 
     @Column(name = "sheet_state_json", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String sheetStateJson;
 
     @Column(name = "inventory_json", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String inventoryJson;
 
     @Column(nullable = false)

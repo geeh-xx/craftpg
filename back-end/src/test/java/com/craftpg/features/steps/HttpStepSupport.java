@@ -1,6 +1,7 @@
 package com.craftpg.features.steps;
 
 import java.nio.charset.StandardCharsets;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
@@ -19,101 +20,106 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 abstract class HttpStepSupport {
 
-    private MockMvc mockMvc;
+	private MockMvc mockMvc;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+	@Autowired
+	private WebApplicationContext webApplicationContext;
 
-    private String method;
-    private String path;
-    private String payloadTemplate;
-    private boolean authenticated;
-    private MvcResult result;
-    private Exception requestException;
+	private String method;
+	private String path;
+	private String payloadTemplate;
+	private boolean authenticated;
+	private MvcResult result;
+	private Exception requestException;
 
-    protected void setRoute(final String method, final String path) {
-        this.method = method;
-        this.path = path;
-    }
+	protected void setRoute(final String method, final String path) {
+		this.method = method;
+		this.path = path;
+	}
 
-    protected void setPayloadTemplate(final String payloadTemplate) {
-        this.payloadTemplate = payloadTemplate;
-    }
+	protected void setPayloadTemplate(final String payloadTemplate) {
+		this.payloadTemplate = payloadTemplate;
+	}
 
-    protected void setAuthenticated(final boolean authenticated) {
-        this.authenticated = authenticated;
-    }
+	protected void setAuthenticated(final boolean authenticated) {
+		this.authenticated = authenticated;
+	}
 
-    protected void sendRequest() {
-        requestException = null;
-        result = null;
+	protected void sendRequest() {
+		requestException = null;
+		result = null;
 
-        if (mockMvc == null) {
-            mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
-                .build();
-        }
+		if (mockMvc == null) {
+			mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+					.apply(springSecurity())
+					.build();
+		}
 
-        final String body;
-        if (payloadTemplate == null || "none".equalsIgnoreCase(payloadTemplate)) {
-            body = null;
-        } else {
-            final String payloadFile = "data/" + payloadTemplate + ".json";
-            try {
-                body = StreamUtils.copyToString(new ClassPathResource(payloadFile).getInputStream(), StandardCharsets.UTF_8);
-            } catch (Exception ex) {
-                throw new IllegalStateException("Unable to read payload file: " + payloadFile, ex);
-            }
-        }
+		final String body;
+		if (payloadTemplate == null || "none".equalsIgnoreCase(payloadTemplate)) {
+			body = null;
+		} else {
+			final String payloadFile = "data/" + payloadTemplate + ".json";
+			try {
+				body = StreamUtils.copyToString(new ClassPathResource(payloadFile).getInputStream(),
+						StandardCharsets.UTF_8);
+			} catch (Exception ex) {
+				throw new IllegalStateException("Unable to read payload file: " + payloadFile, ex);
+			}
+		}
 
-        final HttpMethod httpMethod = HttpMethod.valueOf(method.toUpperCase());
+		final HttpMethod httpMethod = HttpMethod.valueOf(method.toUpperCase());
 
-        try {
-            var requestBuilder = MockMvcRequestBuilders
-                .request(httpMethod, path)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
+		try {
+			var requestBuilder = MockMvcRequestBuilders
+					.request(httpMethod, path)
+					.accept(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON);
 
-            if (authenticated) {
-                requestBuilder = requestBuilder
-                    .header("Authorization", "Bearer cucumber-token")
-                    .with(jwt().jwt(token -> token
-                        .subject(UUID.fromString("00000000-0000-0000-0000-000000000001").toString())
-                        .claim("email", "cucumber@craftpg.test")
-                        .claim("preferred_username", "cucumber-user")
-                    ));
-            }
+			if (authenticated) {
+				requestBuilder = requestBuilder
+						.with(jwt().jwt(token -> token
+								.subject(UUID.fromString("00000000-0000-0000-0000-000000000001").toString())
+								.claim("email", "cucumber@craftpg.test")
+								.claim("preferred_username", "cucumber-user")));
+			}
 
-            if (body != null) {
-                requestBuilder = requestBuilder.content(body);
-            }
+			if (body != null) {
+				requestBuilder = requestBuilder.content(body);
+			}
 
-            result = mockMvc.perform(requestBuilder)
-                .andDo(print())
-                .andReturn();
-        } catch (Exception ex) {
-            requestException = ex;
-        }
-    }
+			result = mockMvc.perform(requestBuilder)
+					.andDo(print())
+					.andReturn();
+		} catch (Exception ex) {
+			requestException = ex;
+		}
+	}
 
-    protected int getResponseStatus() {
-        if (requestException != null) {
-            return 500;
-        }
-        if (result == null) {
-            return 500;
-        }
-        return result.getResponse().getStatus();
-    }
+	protected int getResponseStatus() {
+		if (requestException != null) {
+			return 500;
+		}
+		if (result == null) {
+			return 500;
+		}
+		return result.getResponse().getStatus();
+	}
 
-    protected Exception getRequestException() {
-        return requestException;
-    }
+	protected Exception getRequestException() {
+		return requestException;
+	}
 
-    protected String getResponseBody() {
-        if (result == null) {
-            return "";
-        }
-        return new String(result.getResponse().getContentAsByteArray(), StandardCharsets.UTF_8);
-    }
+	protected String getResponseBody() {
+		if (requestException != null) {
+			java.io.StringWriter sw = new java.io.StringWriter();
+			java.io.PrintWriter pw = new java.io.PrintWriter(sw);
+			requestException.printStackTrace(pw);
+			return "Exception occurred: " + sw.toString();
+		}
+		if (result == null) {
+			return "";
+		}
+		return new String(result.getResponse().getContentAsByteArray(), StandardCharsets.UTF_8);
+	}
 }
