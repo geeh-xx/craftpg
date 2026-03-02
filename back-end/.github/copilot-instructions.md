@@ -121,6 +121,43 @@ make infra-reset
 - Each feature must have a separate documentation file
 - Follow Antora documentation structure and conventions
 
+## Test-Driven Development (TDD)
+
+**All code generation MUST follow the TDD cycle (Red → Green → Refactor):**
+
+1. **Red** – Write a failing test that describes the desired behavior **before** writing any production code
+2. **Green** – Write the minimum production code needed to make the test pass
+3. **Refactor** – Improve the design without changing observable behavior
+
+### TDD Rules
+
+- **NEVER** generate production code without a corresponding failing test first
+- Tests must be written in the same response/step as the feature request
+- Start with the simplest happy-path test, then add edge cases
+- Each test must verify exactly one behavior
+- If asked to implement a feature, always deliver: test file → implementation → refactored code
+
+## Cucumber / BDD Testing
+
+**Every feature must have a Cucumber `.feature` file written in Gherkin syntax.**
+
+### Cucumber Rules
+
+- **ALWAYS** create a `.feature` file when implementing a new feature
+- Feature files are located in `src/test/resources/features/<domain>/`
+- Step definitions are located in `src/test/java/com/craftpg/<domain>/steps/`
+- Runner classes are located in `src/test/java/com/craftpg/runner/`
+- Use `@SpringBootTest` + `@CucumberContextConfiguration` for Spring integration
+- Scenarios must follow the `Given / When / Then` structure
+- Each `Scenario` or `Scenario Outline` must map to a use case or business rule
+- Tag scenarios with business-relevant tags (e.g., `@invite`, `@permission`, `@campaign`)
+
+### Cucumber File Naming
+
+- Feature files: `<domain>-<feature>.feature` (e.g., `invite-acceptance.feature`)
+- Step definitions: `<Domain><Feature>Steps.java` (e.g., `InviteAcceptanceSteps.java`)
+- Runner: `<Domain>CucumberRunner.java` (e.g., `InviteCucumberRunner.java`)
+
 ## Code Quality and Security
 
 ### Quality Checks
