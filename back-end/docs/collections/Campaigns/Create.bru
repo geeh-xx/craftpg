@@ -1,0 +1,21 @@
+meta {
+  name: Create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/campaigns
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "A Sombra de Ravenfall",
+    "description": "Campanha medieval focada em investigação e horror",
+    "frequency": "WEEKLY",
+    "status": "ACTIVE",
+    "progressPercent": 15
+  }
+}

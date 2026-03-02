@@ -1,0 +1,641 @@
+openapi: 3.0.3
+info:
+  title: CraftPG API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+security:
+  - bearerAuth: []
+paths:
+  /campaigns:
+    get:
+      tags: [Campaigns]
+      operationId: campaignsGet
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CampaignResponse'
+    post:
+      tags: [Campaigns]
+      operationId: campaignsPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCampaignRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignResponse'
+
+  /campaigns/{campaignId}:
+    get:
+      tags: [Campaigns]
+      operationId: campaignsCampaignIdGet
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignResponse'
+    patch:
+      tags: [Campaigns]
+      operationId: campaignsCampaignIdPatch
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCampaignRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignResponse'
+    delete:
+      tags: [Campaigns]
+      operationId: campaignsCampaignIdDelete
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204':
+          description: No Content
+
+  /campaigns/{campaignId}/finish:
+    post:
+      tags: [Campaigns]
+      operationId: campaignsCampaignIdFinishPost
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignResponse'
+
+  /campaigns/{campaignId}/permissions:
+    get:
+      tags: [Campaigns]
+      operationId: campaignsCampaignIdPermissionsGet
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignPermissionsResponse'
+
+  /campaigns/{campaignId}/invites:
+    get:
+      tags: [Invites]
+      operationId: campaignsCampaignIdInvitesGet
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PendingInviteResponse'
+    post:
+      tags: [Invites]
+      operationId: campaignsCampaignIdInvitesPost
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInviteRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+
+  /campaigns/{campaignId}/invites/{inviteId}:
+    delete:
+      tags: [Invites]
+      operationId: campaignsCampaignIdInvitesInviteIdDelete
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+        - in: path
+          name: inviteId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204':
+          description: No Content
+
+  /invites/{token}:
+    get:
+      tags: [Invites]
+      operationId: invitesTokenGet
+      security: []
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvitePreviewResponse'
+
+  /invites/{token}/accept:
+    post:
+      tags: [Invites]
+      operationId: invitesTokenAcceptPost
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcceptInviteRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignIdResponse'
+
+  /characters:
+    get:
+      tags: [Characters]
+      operationId: charactersGet
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CharacterResponse'
+    post:
+      tags: [Characters]
+      operationId: charactersPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCharacterRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterResponse'
+
+  /characters/generate-random:
+    post:
+      tags: [Characters]
+      operationId: charactersGenerateRandomPost
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterResponse'
+
+  /campaigns/{campaignId}/sessions:
+    get:
+      tags: [Sessions]
+      operationId: campaignsCampaignIdSessionsGet
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SessionResponse'
+    post:
+      tags: [Sessions]
+      operationId: campaignsCampaignIdSessionsPost
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+
+  /campaigns/{campaignId}/sessions/{sessionId}:
+    patch:
+      tags: [Sessions]
+      operationId: campaignsCampaignIdSessionsSessionIdPatch
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+        - in: path
+          name: sessionId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSessionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+
+  /campaigns/{campaignId}/characters/me:
+    get:
+      tags: [Characters]
+      operationId: campaignsCampaignIdCharactersMeGet
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignCharacterResponse'
+    patch:
+      tags: [Characters]
+      operationId: campaignsCampaignIdCharactersMePatch
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCampaignCharacterRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignCharacterResponse'
+
+  /campaigns/{campaignId}/characters/{campaignCharacterId}/xp:
+    post:
+      tags: [Characters]
+      operationId: campaignsCampaignIdCharactersCampaignCharacterIdXpPost
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema: { type: string, format: uuid }
+        - in: path
+          name: campaignCharacterId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCampaignCharacterXpRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignCharacterResponse'
+
+  /notifications:
+    get:
+      tags: [Notifications]
+      operationId: notificationsGet
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationResponse'
+
+  /notifications/{notificationId}/read:
+    post:
+      tags: [Notifications]
+      operationId: notificationsNotificationIdReadPost
+      parameters:
+        - in: path
+          name: notificationId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationResponse'
+
+  /me:
+    get:
+      tags: [Users]
+      operationId: meGet
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    CreateCampaignRequest:
+      type: object
+      required: [title, frequency, status, progressPercent]
+      properties:
+        title: { type: string }
+        description: { type: string }
+        frequency: { type: string }
+        status: { type: string }
+        progressPercent: { type: integer, minimum: 0, maximum: 100 }
+
+    UpdateCampaignRequest:
+      type: object
+      required: [title, frequency, status, progressPercent]
+      properties:
+        title: { type: string }
+        description: { type: string }
+        frequency: { type: string }
+        status: { type: string }
+        progressPercent: { type: integer, minimum: 0, maximum: 100 }
+
+    CampaignResponse:
+      type: object
+      required: [id, title, system, frequency, status, progressPercent]
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string }
+        description: { type: string }
+        system: { type: string }
+        frequency: { type: string }
+        status: { type: string }
+        progressPercent: { type: integer }
+
+    CampaignPermissionsResponse:
+      type: object
+      required: [canManageSessions, canInvite, isGM]
+      properties:
+        canManageSessions: { type: boolean }
+        canInvite: { type: boolean }
+        isGM: { type: boolean }
+
+    CreateInviteRequest:
+      type: object
+      required: [email, roles]
+      properties:
+        email: { type: string, format: email }
+        roles:
+          type: array
+          items: { type: string }
+
+    InvitePreviewResponse:
+      type: object
+      required: [campaignId, email, roles, expiresAt, accepted]
+      properties:
+        campaignId: { type: string, format: uuid }
+        email: { type: string }
+        roles:
+          type: array
+          items: { type: string }
+        expiresAt: { type: string, format: date-time }
+        accepted: { type: boolean }
+
+    AcceptInviteRequest:
+      type: object
+      required: [characterBaseId]
+      properties:
+        characterBaseId: { type: string, format: uuid }
+
+    CampaignIdResponse:
+      type: object
+      required: [campaignId]
+      properties:
+        campaignId: { type: string, format: uuid }
+
+    TokenResponse:
+      type: object
+      required: [token]
+      properties:
+        token: { type: string }
+
+    PendingInviteResponse:
+      type: object
+      required: [id, campaignId, email, roles, createdAt, expiresAt]
+      properties:
+        id: { type: string, format: uuid }
+        campaignId: { type: string, format: uuid }
+        email: { type: string, format: email }
+        roles:
+          type: array
+          items: { type: string }
+        createdAt: { type: string, format: date-time }
+        expiresAt: { type: string, format: date-time }
+
+    CreateCharacterRequest:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string }
+        race: { type: string }
+        clazz: { type: string }
+        attributesJson: { type: string }
+
+    CharacterResponse:
+      type: object
+      required: [id, name]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        race: { type: string }
+        clazz: { type: string }
+        attributesJson: { type: string }
+
+    CreateSessionRequest:
+      type: object
+      required: [title, scheduledAt]
+      properties:
+        title: { type: string }
+        scheduledAt: { type: string, format: date-time }
+        summary: { type: string }
+        notes: { type: string }
+        attendanceJson: { type: string }
+        xpJson: { type: string }
+        npcsJson: { type: string }
+        mapsJson: { type: string }
+        treasuresJson: { type: string }
+
+    SessionResponse:
+      type: object
+      required: [id, campaignId, title, scheduledAt]
+      properties:
+        id: { type: string, format: uuid }
+        campaignId: { type: string, format: uuid }
+        title: { type: string }
+        scheduledAt: { type: string, format: date-time }
+        summary: { type: string }
+        notes: { type: string }
+
+    UpdateSessionRequest:
+      type: object
+      required: [title, scheduledAt]
+      properties:
+        title: { type: string }
+        scheduledAt: { type: string, format: date-time }
+        summary: { type: string }
+        notes: { type: string }
+        attendanceJson: { type: string }
+        xpJson: { type: string }
+        npcsJson: { type: string }
+        mapsJson: { type: string }
+        treasuresJson: { type: string }
+
+    UpdateCampaignCharacterRequest:
+      type: object
+      required: [sheetStateJson, inventoryJson]
+      properties:
+        sheetStateJson: { type: string }
+        inventoryJson: { type: string }
+
+    AddCampaignCharacterXpRequest:
+      type: object
+      required: [gainedXp]
+      properties:
+        gainedXp: { type: integer, minimum: 0 }
+
+    CampaignCharacterResponse:
+      type: object
+      required: [id, campaignId, characterBaseId, userId, level, xp, locked]
+      properties:
+        id: { type: string, format: uuid }
+        campaignId: { type: string, format: uuid }
+        characterBaseId: { type: string, format: uuid }
+        userId: { type: string, format: uuid }
+        level: { type: integer }
+        xp: { type: integer }
+        sheetStateJson: { type: string }
+        inventoryJson: { type: string }
+        locked: { type: boolean }
+
+    NotificationResponse:
+      type: object
+      required: [id, userId, type, payloadJson, createdAt, read]
+      properties:
+        id: { type: string, format: uuid }
+        userId: { type: string, format: uuid }
+        type: { type: string }
+        payloadJson: { type: string }
+        createdAt: { type: string, format: date-time }
+        readAt: { type: string, format: date-time }
+        read: { type: boolean }
+
+    MeResponse:
+      type: object
+      required: [id, email, displayName]
+      properties:
+        id: { type: string, format: uuid }
+        email: { type: string, format: email }
+        displayName: { type: string }

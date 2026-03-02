@@ -1,0 +1,261 @@
+:root {
+  --craftpg-bg-1: #0b1020;
+  --craftpg-bg-2: #151f3d;
+  --craftpg-bg-3: #1d2f5f;
+  --craftpg-card: #f8fafc;
+  --craftpg-border: #d9e2f5;
+  --craftpg-text: #0f172a;
+  --craftpg-muted: #64748b;
+  --craftpg-primary: #1d4ed8;
+  --craftpg-primary-hover: #1e40af;
+}
+
+html,
+body {
+  min-height: 100vh !important;
+}
+
+body {
+  margin: 0 !important;
+  color: var(--craftpg-text) !important;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif !important;
+  background:
+    radial-gradient(1000px 420px at -10% -20%, rgba(59, 130, 246, 0.28), transparent 70%),
+    radial-gradient(900px 360px at 110% 120%, rgba(99, 102, 241, 0.22), transparent 70%),
+    linear-gradient(135deg, var(--craftpg-bg-1), var(--craftpg-bg-2) 45%, var(--craftpg-bg-3)) !important;
+}
+
+#kc-header,
+#kc-header-wrapper,
+.kc-header-wrapper {
+  color: #f8fafc !important;
+  text-align: center !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.2px !important;
+  margin-bottom: 18px !important;
+}
+
+#kc-content,
+#kc-content-wrapper,
+.kc-content-wrapper {
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+}
+
+#kc-content-wrapper {
+  min-height: calc(100vh - 120px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#kc-form-wrapper,
+#kc-form,
+.kcFormCardClass {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.card-pf,
+.pf-v5-c-card,
+.login-pf-page .card-pf {
+  width: min(100%, 460px) !important;
+  margin: 0 auto !important;
+  background: var(--craftpg-card) !important;
+  border: 1px solid var(--craftpg-border) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    0 18px 36px rgba(2, 6, 23, 0.2),
+    0 2px 0 rgba(255, 255, 255, 0.3) inset !important;
+}
+
+#kc-page-title,
+.pf-v5-c-title {
+  color: var(--craftpg-text) !important;
+  font-weight: 800 !important;
+  font-size: 22px !important;
+  line-height: 1.2 !important;
+  margin-bottom: 18px !important;
+}
+
+#kc-page-title {
+  margin-top: 2px !important;
+}
+
+#kc-content-wrapper .instruction,
+#kc-form-options,
+#kc-form-options .checkbox,
+#kc-current-locale-link,
+.pf-v5-c-login__main-footer-band-item {
+  color: var(--craftpg-muted) !important;
+}
+
+#kc-form-login label {
+  font-size: 18px !important;
+  line-height: 1.1 !important;
+  font-weight: 800 !important;
+  color: #111827 !important;
+  margin-bottom: 8px !important;
+}
+
+#kc-form-login .pf-v5-c-form-control,
+#kc-form-login input[type="text"],
+#kc-form-login input[type="password"],
+#kc-form-login input[type="email"] {
+  min-height: 46px !important;
+  border-radius: 10px !important;
+  border: 1px solid #b9c7dd !important;
+  background: #eef2f7 !important;
+  color: var(--craftpg-text) !important;
+  font-size: 16px !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+#kc-form-login .pf-v5-c-form-control::placeholder,
+#kc-form-login input::placeholder {
+  color: #94a3b8 !important;
+}
+
+#kc-form-login .pf-v5-c-form-control:focus,
+#kc-form-login input:focus {
+  border-color: #60a5fa !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.22) !important;
+}
+
+#kc-form-buttons .pf-v5-c-button.pf-m-primary,
+#kc-login,
+input[type="submit"]#kc-login,
+button[type="submit"] {
+  min-height: 48px !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--craftpg-primary) !important;
+  background: linear-gradient(180deg, #2563eb, var(--craftpg-primary)) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  letter-spacing: 0.2px !important;
+}
+
+#kc-form-buttons {
+  margin-top: 18px !important;
+}
+
+#kc-registration {
+  margin-top: 10px !important;
+  font-size: 14px !important;
+}
+
+#kc-form-buttons .pf-v5-c-button.pf-m-primary:hover,
+#kc-login:hover,
+input[type="submit"]#kc-login:hover,
+button[type="submit"]:hover {
+  background: linear-gradient(180deg, #1d4ed8, var(--craftpg-primary-hover)) !important;
+  border-color: var(--craftpg-primary-hover) !important;
+}
+
+#kc-social-providers,
+#kc-info-wrapper,
+.pf-v5-c-login__main-footer-band {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+#kc-social-providers ul,
+#kc-social-providers li {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+#kc-social-providers .pf-v5-c-button,
+#kc-social-providers a {
+  min-height: 40px !important;
+  min-width: 40px !important;
+  border-radius: 999px !important;
+  border: 1px solid #cbd5e1 !important;
+  background: #ffffff !important;
+  color: #475569 !important;
+  font-size: 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}
+
+#kc-social-providers {
+  margin-top: 12px !important;
+  text-align: center !important;
+}
+
+#kc-social-providers ul {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+a,
+#kc-registration a,
+#kc-social-providers a,
+#kc-form-options a {
+  color: #1d4ed8 !important;
+  text-decoration: none !important;
+}
+
+a:hover,
+#kc-registration a:hover,
+#kc-social-providers a:hover,
+#kc-form-options a:hover {
+  color: #1e40af !important;
+}
+
+@media (max-width: 768px) {
+  #kc-content,
+  #kc-content-wrapper,
+  .kc-content-wrapper {
+    padding: 16px !important;
+  }
+
+  .card-pf,
+  .pf-v5-c-card,
+  .login-pf-page .card-pf {
+    width: 100% !important;
+    border-radius: 14px !important;
+    margin: 0 !important;
+  }
+
+  #kc-page-title,
+  .pf-v5-c-title {
+    font-size: 20px !important;
+  }
+
+  #kc-form-login label {
+    font-size: 16px !important;
+  }
+
+  #kc-form-login .pf-v5-c-form-control,
+  #kc-form-login input[type="text"],
+  #kc-form-login input[type="password"],
+  #kc-form-login input[type="email"] {
+    min-height: 44px !important;
+    font-size: 15px !important;
+  }
+
+  #kc-login,
+  input[type="submit"]#kc-login,
+  button[type="submit"] {
+    min-height: 46px !important;
+    font-size: 17px !important;
+  }
+
+  #kc-registration {
+    font-size: 14px !important;
+  }
+}

@@ -1,0 +1,18 @@
+meta {
+  name: Campaign Character - Update Me
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/campaigns/{{campaignId}}/characters/me
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "sheetStateJson": "{\"hp\":24,\"mana\":8,\"conditions\":[\"inspired\"]}",
+    "inventoryJson": "[{\"item\":\"Longbow\",\"qty\":1},{\"item\":\"Potion\",\"qty\":2}]"
+  }
+}

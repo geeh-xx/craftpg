@@ -1,0 +1,33 @@
+meta {
+  name: Cadastro - Create User (Admin API)
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{keycloakUrl}}/admin/realms/{{realm}}/users
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{adminAccessToken}}
+}
+
+body:json {
+  {
+    "enabled": true,
+    "username": "novo.player@craftpg.dev",
+    "email": "novo.player@craftpg.dev",
+    "emailVerified": true,
+    "firstName": "Novo",
+    "lastName": "Player",
+    "credentials": [
+      {
+        "type": "password",
+        "value": "Player@123",
+        "temporary": false
+      }
+    ]
+  }
+}

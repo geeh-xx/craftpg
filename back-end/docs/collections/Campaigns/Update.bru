@@ -1,0 +1,21 @@
+meta {
+  name: Update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{baseUrl}}/campaigns/{{campaignId}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "A Sombra de Ravenfall - Ato II",
+    "description": "Grupo avançou para as catacumbas da cidade",
+    "frequency": "WEEKLY",
+    "status": "ACTIVE",
+    "progressPercent": 45
+  }
+}

@@ -1,0 +1,4 @@
+= Auth + Keycloak
+
+API validates JWT issuer from `KEYCLOAK_ISSUER_URI`.
+Campaign roles are stored in PostgreSQL.

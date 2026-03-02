@@ -1,0 +1,6 @@
+= Architecture
+
+* Java 25
+* Spring Boot 4.0.3
+* PostgreSQL + Liquibase
+* Keycloak JWT Resource Server

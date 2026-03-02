@@ -1,0 +1,9 @@
+= CraftPG
+
+CraftPG backend documentation.
+
+Current highlights:
+
+- Pending invite management by campaign (list + cancel).
+- Campaign permissions with explicit `isGM` flag.
+- Local email delivery through MailHog.

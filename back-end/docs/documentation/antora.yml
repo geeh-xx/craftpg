@@ -1,0 +1,4 @@
+name: craftpg
+version: ~
+nav:
+  - modules/ROOT/nav.adoc

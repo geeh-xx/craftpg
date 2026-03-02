@@ -1,0 +1,11 @@
+meta {
+  name: List Pending by Campaign
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/campaigns/{{campaignId}}/invites
+  body: none
+  auth: inherit
+}

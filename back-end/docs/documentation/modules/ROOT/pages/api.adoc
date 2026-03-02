@@ -1,0 +1,20 @@
+= API
+
+OpenAPI source: `docs/api/openapi.yml`.
+Main endpoints: campaigns, invites, characters, sessions.
+
+== Campaign permissions
+
+`GET /campaigns/{campaignId}/permissions`
+
+- `canManageSessions`
+- `canInvite`
+- `isGM`
+
+== Invites
+
+- `POST /campaigns/{campaignId}/invites`: create invite.
+- `GET /campaigns/{campaignId}/invites`: list pending invites for campaign management.
+- `DELETE /campaigns/{campaignId}/invites/{inviteId}`: cancel pending invite.
+- `GET /invites/{token}`: invite preview (public).
+- `POST /invites/{token}/accept`: accept invite.

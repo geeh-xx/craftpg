@@ -1,0 +1,17 @@
+meta {
+  name: Accept
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/invites/{{inviteToken}}/accept
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "characterBaseId": "{{characterBaseId}}"
+  }
+}

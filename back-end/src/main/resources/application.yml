@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: 'Craftpg API'
+    version: '@project.version@'
+  profiles:
+    active: '@activatedProfile@'
+  datasource:
+    url: jdbc:postgresql://${APP_DB_HOST}:${APP_DB_PORT}/${APP_DB_NAME}
+    username: ${APP_DB_USER}
+    password: ${APP_DB_PASS}
+  mail:
+    host: ${APP_MAIL_HOST:localhost}
+    port: ${APP_MAIL_PORT:1025}
+    username: ${APP_MAIL_USER:}
+    password: ${APP_MAIL_PASS:}
+    properties:
+      mail:
+        smtp:
+          auth: ${APP_MAIL_SMTP_AUTH:false}
+          starttls:
+            enable: ${APP_MAIL_SMTP_STARTTLS:false}
+  jpa:
+    open-in-view: false
+  liquibase:
+    change-log: classpath:db/changelogs/db.changelog-master.sql
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
+
+app:
+  invite:
+    base-url: ${APP_INVITE_BASE_URL:http://localhost:3000/invites}
+    mail-from: ${APP_INVITE_MAIL_FROM:noreply@craftpg.local}
+  minio:
+    endpoint: ${MINIO_ENDPOINT}
+    region: ${MINIO_REGION}
+    bucket-maps: ${MINIO_BUCKET_MAPS}
+    bucket-portraits: ${MINIO_BUCKET_PORTRAITS}

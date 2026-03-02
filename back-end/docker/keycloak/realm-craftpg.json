@@ -1,0 +1,96 @@
+{
+  "realm": "craftpg",
+  "enabled": true,
+  "loginTheme": "craftpg",
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
+  "verifyEmail": true,
+  "requiredActions": [
+    {
+      "alias": "VERIFY_EMAIL",
+      "name": "Verify Email",
+      "providerId": "VERIFY_EMAIL",
+      "enabled": true,
+      "defaultAction": true,
+      "priority": 10,
+      "config": {}
+    },
+    {
+      "alias": "UPDATE_PROFILE",
+      "name": "Update Profile",
+      "providerId": "UPDATE_PROFILE",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 20,
+      "config": {}
+    }
+  ],
+  "smtpServer": {
+    "host": "mailhog",
+    "port": "1025",
+    "from": "noreply@craftpg.local",
+    "fromDisplayName": "CraftPG",
+    "auth": "false",
+    "ssl": "false",
+    "starttls": "false"
+  },
+  "identityProviders": [
+    {
+      "alias": "google",
+      "providerId": "google",
+      "enabled": true,
+      "trustEmail": true,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "firstBrokerLoginFlowAlias": "first broker login",
+      "config": {
+        "clientId": "${KEYCLOAK_GOOGLE_CLIENT_ID}",
+        "clientSecret": "${KEYCLOAK_GOOGLE_CLIENT_SECRET}",
+        "defaultScope": "openid profile email"
+      }
+    },
+    {
+      "alias": "github",
+      "providerId": "github",
+      "enabled": true,
+      "trustEmail": true,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "firstBrokerLoginFlowAlias": "first broker login",
+      "config": {
+        "clientId": "${KEYCLOAK_GITHUB_CLIENT_ID}",
+        "clientSecret": "${KEYCLOAK_GITHUB_CLIENT_SECRET}"
+      }
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "craftpg-web",
+      "name": "craftpg-web",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": ["http://localhost:3000/*"],
+      "webOrigins": ["http://localhost:3000"]
+    }
+  ],
+  "users": [
+    {
+      "username": "player@craftpg.dev",
+      "email": "player@craftpg.dev",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Default",
+      "lastName": "Player",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Player@123",
+          "temporary": false
+        }
+      ]
+    }
+  ]
+}

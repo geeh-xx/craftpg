@@ -1,0 +1,25 @@
+meta {
+  name: Update
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/campaigns/{{campaignId}}/sessions/{{sessionId}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "Sessão 03 - O Ritual (Reagendada)",
+    "scheduledAt": "2026-03-11T20:00:00Z",
+    "summary": "Sessão reagendada por indisponibilidade de jogador",
+    "notes": "Confirmar presença até 24h antes",
+    "attendanceJson": "[{\"userId\":\"c67e5608-a35d-4afd-9df0-651f0f4422f5\",\"present\":false}]",
+    "xpJson": "[]",
+    "npcsJson": "[]",
+    "mapsJson": "[]",
+    "treasuresJson": "[]"
+  }
+}

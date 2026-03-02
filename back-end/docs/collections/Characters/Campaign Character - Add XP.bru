@@ -1,0 +1,17 @@
+meta {
+  name: Campaign Character - Add XP
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/campaigns/{{campaignId}}/characters/{{campaignCharacterId}}/xp
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "gainedXp": 350
+  }
+}

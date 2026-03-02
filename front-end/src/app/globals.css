@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@plugin "flowbite/plugin";
+@source "../../node_modules/flowbite";
+@source "../../node_modules/flowbite-react";
+@source "../**/*.{ts,tsx}";
+
+body {
+  background: white;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

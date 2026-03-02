@@ -1,0 +1,11 @@
+meta {
+  name: UserInfo
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{keycloakUrl}}/realms/{{realm}}/protocol/openid-connect/userinfo
+  body: none
+  auth: inherit
+}

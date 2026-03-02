@@ -1,0 +1,19 @@
+meta {
+  name: Admin Login
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{keycloakUrl}}/realms/master/protocol/openid-connect/token
+  body: text
+  auth: none
+}
+
+headers {
+  Content-Type: application/x-www-form-urlencoded
+}
+
+body:text {
+  grant_type=password&client_id=admin-cli&username={{keycloakAdminUser}}&password={{keycloakAdminPassword}}
+}

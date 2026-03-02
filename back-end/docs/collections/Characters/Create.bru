@@ -1,0 +1,20 @@
+meta {
+  name: Create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/characters
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Elandra",
+    "race": "Elf",
+    "clazz": "Ranger",
+    "attributesJson": "{\"str\":10,\"dex\":16,\"con\":12,\"int\":13,\"wis\":15,\"cha\":9}"
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "name": "craftpg-api",
+  "version": "1",
+  "items": [
+    {
+      "name": "Health",
+      "items": [
+        {
+          "name": "Health (Actuator)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/actuator/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaigns",
+      "items": [
+        {
+          "name": "List",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/campaigns",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/campaigns",
+            "headers": [
+              { "name": "Authorization", "value": "Bearer {{token}}" },
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"A Sombra de Ravenfall\",\n  \"description\": \"Campanha medieval focada em investigação e horror\",\n  \"frequency\": \"WEEKLY\",\n  \"status\": \"ACTIVE\",\n  \"progressPercent\": 15\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Get By Id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}",
+            "headers": [
+              { "name": "Authorization", "value": "Bearer {{token}}" },
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"A Sombra de Ravenfall - Ato II\",\n  \"description\": \"Grupo avançou para as catacumbas da cidade\",\n  \"frequency\": \"WEEKLY\",\n  \"status\": \"ACTIVE\",\n  \"progressPercent\": 45\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Finish",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}/finish",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invites",
+      "items": [
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}/invites",
+            "headers": [
+              { "name": "Authorization", "value": "Bearer {{token}}" },
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"player1@craftpg.dev\",\n  \"roles\": [\"PLAYER\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Preview by Token",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/invites/{{inviteToken}}"
+          }
+        },
+        {
+          "name": "Accept",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/invites/{{inviteToken}}/accept",
+            "headers": [
+              { "name": "Authorization", "value": "Bearer {{token}}" },
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"characterBaseId\": \"{{characterBaseId}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Characters",
+      "items": [
+        {
+          "name": "List",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/characters",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/characters",
+            "headers": [
+              { "name": "Authorization", "value": "Bearer {{token}}" },
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Elandra\",\n  \"race\": \"Elf\",\n  \"clazz\": \"Ranger\",\n  \"attributesJson\": \"{\\\"str\\\":10,\\\"dex\\\":16,\\\"con\\\":12,\\\"int\\\":13,\\\"wis\\\":15,\\\"cha\\\":9}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Generate Random",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/characters/generate-random",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Campaign Character - Me",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}/characters/me",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Campaign Character - Update Me",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}/characters/me",
+            "headers": [
+              { "name": "Authorization", "value": "Bearer {{token}}" },
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sheetStateJson\": \"{\\\"hp\\\":24,\\\"mana\\\":8,\\\"conditions\\\":[\\\"inspired\\\"]}\",\n  \"inventoryJson\": \"[{\\\"item\\\":\\\"Longbow\\\",\\\"qty\\\":1},{\\\"item\\\":\\\"Potion\\\",\\\"qty\\\":2}]\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Campaign Character - Add XP",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}/characters/{{campaignCharacterId}}/xp",
+            "headers": [
+              { "name": "Authorization", "value": "Bearer {{token}}" },
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gainedXp\": 350\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sessions",
+      "items": [
+        {
+          "name": "List by Campaign",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}/sessions",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}/sessions",
+            "headers": [
+              { "name": "Authorization", "value": "Bearer {{token}}" },
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Sessão 03 - O Ritual\",\n  \"scheduledAt\": \"2026-03-10T20:00:00Z\",\n  \"summary\": \"Grupo investigou a cripta e encontrou o tomo proibido\",\n  \"notes\": \"Próxima sessão começa no distrito antigo\",\n  \"attendanceJson\": \"[{\\\"userId\\\":\\\"c67e5608-a35d-4afd-9df0-651f0f4422f5\\\",\\\"present\\\":true}]\",\n  \"xpJson\": \"[{\\\"campaignCharacterId\\\":\\\"{{campaignCharacterId}}\\\",\\\"xp\\\":350}]\",\n  \"npcsJson\": \"[{\\\"name\\\":\\\"Mestre Corvin\\\",\\\"role\\\":\\\"mentor\\\"}]\",\n  \"mapsJson\": \"[{\\\"name\\\":\\\"Catacumbas\\\",\\\"url\\\":\\\"https://example.com/mapa-catacumbas.png\\\"}]\",\n  \"treasuresJson\": \"[{\\\"item\\\":\\\"Anel Rúnico\\\",\\\"rarity\\\":\\\"rare\\\"}]\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/campaigns/{{campaignId}}/sessions/{{sessionId}}",
+            "headers": [
+              { "name": "Authorization", "value": "Bearer {{token}}" },
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Sessão 03 - O Ritual (Reagendada)\",\n  \"scheduledAt\": \"2026-03-11T20:00:00Z\",\n  \"summary\": \"Sessão reagendada por indisponibilidade de jogador\",\n  \"notes\": \"Confirmar presença até 24h antes\",\n  \"attendanceJson\": \"[{\\\"userId\\\":\\\"c67e5608-a35d-4afd-9df0-651f0f4422f5\\\",\\\"present\\\":false}]\",\n  \"xpJson\": \"[]\",\n  \"npcsJson\": \"[]\",\n  \"mapsJson\": \"[]\",\n  \"treasuresJson\": \"[]\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "items": [
+        {
+          "name": "List",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/notifications",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Mark as Read",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/notifications/{{notificationId}}/read",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "items": [
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/me",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+= Runbook
+
+1. Start dependencies: `make deps-up`
+2. Run backend: `make run`
+3. Generate API stubs: `make gen-api`
+4. Open MailHog UI: `http://localhost:8025`
+5. Test invite management in Bruno collection (`docs/collections/Invites`).

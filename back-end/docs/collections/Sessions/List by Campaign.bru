@@ -1,0 +1,11 @@
+meta {
+  name: List by Campaign
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/campaigns/{{campaignId}}/sessions
+  body: none
+  auth: inherit
+}

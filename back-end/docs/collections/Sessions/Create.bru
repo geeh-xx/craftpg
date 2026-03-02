@@ -1,0 +1,25 @@
+meta {
+  name: Create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/campaigns/{{campaignId}}/sessions
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "Sessão 03 - O Ritual",
+    "scheduledAt": "2026-03-10T20:00:00Z",
+    "summary": "Grupo investigou a cripta e encontrou o tomo proibido",
+    "notes": "Próxima sessão começa no distrito antigo",
+    "attendanceJson": "[{\"userId\":\"c67e5608-a35d-4afd-9df0-651f0f4422f5\",\"present\":true}]",
+    "xpJson": "[{\"campaignCharacterId\":\"{{campaignCharacterId}}\",\"xp\":350}]",
+    "npcsJson": "[{\"name\":\"Mestre Corvin\",\"role\":\"mentor\"}]",
+    "mapsJson": "[{\"name\":\"Catacumbas\",\"url\":\"https://example.com/mapa-catacumbas.png\"}]",
+    "treasuresJson": "[{\"item\":\"Anel Rúnico\",\"rarity\":\"rare\"}]"
+  }
+}
