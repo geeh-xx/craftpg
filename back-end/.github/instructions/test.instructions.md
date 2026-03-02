@@ -122,8 +122,9 @@ applyTo: "src/test/java/**/*.java"
 ### Setup
 
 - Feature files: `src/test/resources/features/<domain>/<feature>.feature`
-- Step definitions: `src/test/java/com/craftpg/<domain>/steps/<Feature>Steps.java`
-- Runner classes: `src/test/java/com/craftpg/runner/<Domain>CucumberRunner.java`
+- Data files: `src/test/resources/data/<domain>/<data>.json` (if needed)
+- Step definitions: `src/test/java/com/craftpg/features/steps/<domain>/<Feature>Steps.java`
+- Runner classes: `src/test/java/com/craftpg/features/runner/<Domain>CucumberRunner.java`
 - Use `@CucumberContextConfiguration` + `@SpringBootTest` on the runner (or a shared base config)
 - Required Maven dependencies: `io.cucumber:cucumber-java`, `io.cucumber:cucumber-junit-platform-engine`, `io.cucumber:cucumber-spring`
 

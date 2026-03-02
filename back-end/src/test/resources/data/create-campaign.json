@@ -1,0 +1,7 @@
+{
+  "title": "Campaign from payload",
+  "description": "desc",
+  "frequency": "WEEKLY",
+  "status": "ACTIVE",
+  "progressPercent": 25
+}

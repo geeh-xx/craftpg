@@ -145,8 +145,8 @@ make infra-reset
 
 - **ALWAYS** create a `.feature` file when implementing a new feature
 - Feature files are located in `src/test/resources/features/<domain>/`
-- Step definitions are located in `src/test/java/com/craftpg/<domain>/steps/`
-- Runner classes are located in `src/test/java/com/craftpg/runner/`
+- Step definitions are located in `src/test/java/com/craftpg/features/steps/<domain>/`
+- Runner classes are located in `src/test/java/com/craftpg/features/runner/`
 - Use `@SpringBootTest` + `@CucumberContextConfiguration` for Spring integration
 - Scenarios must follow the `Given / When / Then` structure
 - Each `Scenario` or `Scenario Outline` must map to a use case or business rule

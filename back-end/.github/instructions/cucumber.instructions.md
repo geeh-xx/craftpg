@@ -46,6 +46,17 @@ Use `Background` for shared preconditions that apply to **all** scenarios in the
     And a campaign "Dragon Quest" is created by the dungeon master
 ```
 
+### Entry Point
+- Each scenario should start with a clear entry point e.g (api endpoint, kafka event, etc.):
+
+```gherkin
+  Scenario: Player accepts a valid invite
+    Given the player has a valid invite token "abc-123"
+    When When the endpoint is called through /v1/invite/accept/{token}
+    Then the player becomes a member of the campaign
+    And the character is locked to the campaign
+```
+
 ### Scenarios
 
 - Each `Scenario` must test **exactly one business rule or behavior**
@@ -94,7 +105,7 @@ Use `Background` for shared preconditions that apply to **all** scenarios in the
 
 For every `.feature` file, create a matching step definition class:
 
-- **Location**: `src/test/java/com/craftpg/<domain>/steps/`
+- **Location**: `src/test/java/com/craftpg/features/steps/<domain>/`
 - **Class name**: `<Feature>Steps.java` (e.g., `InviteAcceptanceSteps.java`)
 - **Annotations**: `@Given`, `@When`, `@Then` from `io.cucumber.java.en`
 - Use `@Autowired` for Spring beans
@@ -104,7 +115,7 @@ For every `.feature` file, create a matching step definition class:
 
 Create a runner for each domain (or a single shared runner):
 
-- **Location**: `src/test/java/com/craftpg/runner/`
+- **Location**: `src/test/java/com/craftpg/features/runner/`
 - **Class name**: `CucumberRunner.java`
 
 ```java

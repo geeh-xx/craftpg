@@ -60,7 +60,7 @@ public class Campaign {
         return campaign;
     }
 
-    public void update(@NonNull final String title, @NonNull final String description, @NonNull final String frequency, @NonNull final String status, @NonNull final Integer progressPercent) {
+    public void update(@NonNull final String title, final String description, @NonNull final String frequency, @NonNull final String status, @NonNull final Integer progressPercent) {
         this.title = title;
         this.description = description;
         this.frequency = frequency;
