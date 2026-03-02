@@ -13,6 +13,18 @@ applyTo: '**/*.java'
 - Use Lombok`@NonNull` annotation for required method parameters
 - Use `final` keyword for immutable method parameters
 
+## Test-Driven Development (TDD) — Mandatory
+
+**All production code MUST be written following the Red → Green → Refactor cycle:**
+
+1. **Red** – Write a failing unit test (or Cucumber scenario) that captures the required behavior
+2. **Green** – Write the **minimum** production code needed to make the test(s) pass
+3. **Refactor** – Clean up both production code and tests without changing behavior
+
+- **NEVER** generate a new class, method, or behavior without a corresponding failing test first
+- For every new feature, also create a Cucumber `.feature` file (see `cucumber.instructions.md`)
+- Follow the naming convention `Should_<expected>_When_<condition>` for test methods
+
 ## General Instructions
 
 - First, prompt the user if they want to integrate static analysis tools (SonarQube, PMD, Checkstyle)

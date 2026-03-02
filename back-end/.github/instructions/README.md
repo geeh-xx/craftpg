@@ -2,11 +2,42 @@
 
 This directory contains path-specific instructions for GitHub Copilot. These instructions provide context-specific guidance for different parts of the codebase.
 
+> **Important**: All code generation follows the **TDD cycle (Red → Green → Refactor)**.
+> Every new feature also requires a **Cucumber `.feature` file** before production code is written.
+
 ## How It Works
 
 When you work on files matching a specific path pattern, Copilot will automatically apply the relevant instructions from this directory in addition to the repository-wide instructions in `.github/copilot-instructions.md`.
 
 ## Available Instructions
+
+### Java Source Files (`java.instructions.md`)
+- **Applies to**: `**/*.java`
+- **Purpose**: Java language guidelines and **mandatory TDD practice**
+- **Key Topics**:
+  - Test-Driven Development (Red → Green → Refactor) — enforced for all code
+  - Java 25 features and best practices
+  - DDD, Aggregate Root, Use Cases, and Exception Handling
+
+### Test Layer (`test.instructions.md`)
+- **Applies to**: `src/test/java/**/*.java`
+- **Purpose**: Guidelines for writing unit tests and **Cucumber step definitions**
+- **Key Topics**:
+  - TDD cycle enforcement
+  - Test structure and naming
+  - Mocking strategies with Mockito and Instancio
+  - Cucumber step definition conventions
+  - Coverage requirements (80% minimum via JaCoCo)
+
+### Cucumber Feature Files (`cucumber.instructions.md`)
+- **Applies to**: `src/test/resources/features/**/*.feature`
+- **Purpose**: Guidelines for writing Gherkin `.feature` files — required for every feature
+- **Key Topics**:
+  - Feature file structure and location
+  - Gherkin conventions (Feature, Background, Scenario, Scenario Outline)
+  - Step definition and runner requirements
+  - Tagging strategy
+  - Definition of Done checklist
 
 ### Domain Layer (`domain.instructions.md`)
 - **Applies to**: `src/main/java/com/craftpg/domain/*.java`
@@ -53,15 +84,6 @@ When you work on files matching a specific path pattern, Copilot will automatica
   - Security implementations
   - Infrastructure best practices
 
-### Test Layer (`test.instructions.md`)
-- **Applies to**: `src/test/java/**/*.java`
-- **Purpose**: Guidelines for writing tests
-- **Key Topics**:
-  - Test structure and naming
-  - Mocking strategies
-  - Test data generation with Instancio
-  - Coverage requirements
-
 ### OpenAPI Specifications (`openapi.instructions.md`)
 - **Applies to**: `docs/api/*.yaml`, `docs/api/*.yml`
 - **Purpose**: Guidelines for API specification files
@@ -73,10 +95,12 @@ When you work on files matching a specific path pattern, Copilot will automatica
 
 ## Best Practices
 
-1. **Specificity**: Path-specific instructions should be focused on concerns specific to that layer or component type
-2. **Complementary**: These instructions complement the repository-wide instructions, not replace them
-3. **Maintenance**: Keep these instructions up to date as the codebase evolves
-4. **Consistency**: Ensure instructions across different files don't conflict with each other
+1. **TDD First**: Always write tests before production code — no exceptions
+2. **Cucumber per Feature**: Every feature must have a `.feature` file with Gherkin scenarios
+3. **Specificity**: Path-specific instructions should be focused on concerns specific to that layer or component type
+4. **Complementary**: These instructions complement the repository-wide instructions, not replace them
+5. **Maintenance**: Keep these instructions up to date as the codebase evolves
+6. **Consistency**: Ensure instructions across different files don't conflict with each other
 
 ## Adding New Instructions
 

@@ -4,6 +4,18 @@ applyTo: "src/test/java/**/*.java"
 
 # Test Instructions
 
+## Test-Driven Development (TDD) — Mandatory
+
+**All tests MUST be written BEFORE the production code (Red → Green → Refactor):**
+
+1. **Red** – Write a failing test describing one specific behavior
+2. **Green** – Write the minimum production code to make the test pass
+3. **Refactor** – Improve design without altering behavior; ensure tests still pass
+
+- Tests are the specification; production code exists only to satisfy them
+- One behavior per test — keep tests small and focused
+- After each Red → Green cycle, run the full test suite to catch regressions
+
 
 ## Test Framework
 
@@ -102,3 +114,86 @@ applyTo: "src/test/java/**/*.java"
 - Test both happy paths and error scenarios
 - Test boundary conditions
 - Test all business logic branches
+
+## Cucumber / BDD Tests — Mandatory per Feature
+
+**Every new feature MUST have a corresponding Cucumber `.feature` file.**
+
+### Setup
+
+- Feature files: `src/test/resources/features/<domain>/<feature>.feature`
+- Step definitions: `src/test/java/com/craftpg/<domain>/steps/<Feature>Steps.java`
+- Runner classes: `src/test/java/com/craftpg/runner/<Domain>CucumberRunner.java`
+- Use `@CucumberContextConfiguration` + `@SpringBootTest` on the runner (or a shared base config)
+- Required Maven dependencies: `io.cucumber:cucumber-java`, `io.cucumber:cucumber-junit-platform-engine`, `io.cucumber:cucumber-spring`
+
+### Runner Example
+
+```java
+@Suite
+@IncludeEngines("cucumber")
+@SelectClasspathResource("features")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.craftpg")
+@SpringBootTest
+@CucumberContextConfiguration
+public class CucumberRunner {}
+```
+
+### Feature File Structure
+
+```gherkin
+@tag
+Feature: <Feature Name>
+  As a <role>
+  I want <goal>
+  So that <benefit>
+
+  Background:
+    Given <shared precondition>
+
+  Scenario: <Happy path description>
+    Given <precondition>
+    When  <action>
+    Then  <expected outcome>
+
+  Scenario Outline: <Parameterized scenario>
+    Given <precondition with <param>>
+    When  <action>
+    Then  <expected outcome>
+
+    Examples:
+      | param  |
+      | value1 |
+      | value2 |
+```
+
+### Step Definition Conventions
+
+- Annotate with `@Given`, `@When`, `@Then` from `io.cucumber.java.en`
+- Use `@Autowired` or constructor injection for Spring beans in step classes
+- Capture variables with Cucumber expression parameters or regex groups
+- Share state between steps via instance fields (Cucumber creates one instance per scenario)
+- **Step method names** follow a descriptive `camelCase` style that mirrors the Gherkin text — they do **not** use the `Should_<expected>_When_<condition>` convention (which applies only to JUnit test methods)
+- Example:
+  ```java
+  @Given("a campaign with id {string} exists")
+  public void aCampaignWithIdExists(String campaignId) {
+      // setup
+  }
+
+  @When("the user accepts the invite with token {string}")
+  public void theUserAcceptsTheInvite(String token) {
+      // action
+  }
+
+  @Then("the membership is created successfully")
+  public void theMembershipIsCreatedSuccessfully() {
+      // assertion
+  }
+  ```
+
+### Tagging Strategy
+
+- Tag by domain: `@campaign`, `@invite`, `@character`, `@user`
+- Tag by test type: `@smoke`, `@regression`, `@integration`
+- Tag negative/edge cases: `@negative`, `@boundary`
