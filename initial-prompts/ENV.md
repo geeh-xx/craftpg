@@ -1,0 +1,18 @@
+# .env.example (Root)
+
+APP_DB_HOST=localhost
+APP_DB_PORT=5432
+APP_DB_NAME=craftpg
+APP_DB_USER=craftpg
+APP_DB_PASS=craftpg
+
+KEYCLOAK_URL=http://localhost:8081
+KEYCLOAK_REALM=craftpg
+KEYCLOAK_ISSUER_URI=http://localhost:8081/realms/craftpg
+
+MINIO_ROOT_USER=minio
+MINIO_ROOT_PASSWORD=minio12345
+MINIO_ENDPOINT=http://localhost:9000
+MINIO_REGION=us-east-1
+MINIO_BUCKET_MAPS=campaign-maps
+MINIO_BUCKET_PORTRAITS=character-portraits

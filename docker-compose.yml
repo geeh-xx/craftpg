@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: craftpg-postgres
+    environment:
+      POSTGRES_USER: ${APP_DB_USER:-craftpg}
+      POSTGRES_PASSWORD: ${APP_DB_PASS:-craftpg}
+      POSTGRES_DB: ${APP_DB_NAME:-craftpg}
+    ports:
+      - "${APP_DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - craftpg-network
+
+  keycloak-db:
+    image: postgres:15
+    container_name: craftpg-keycloak-db
+    environment:
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloakpassword
+      POSTGRES_DB: keycloak
+    ports:
+      - "5433:5432"
+    volumes:
+      - keycloak_db_data:/var/lib/postgresql/data
+    networks:
+      - craftpg-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    container_name: craftpg-keycloak
+    command: start-dev --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-db
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloakpassword
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_GOOGLE_CLIENT_ID: ${KEYCLOAK_GOOGLE_CLIENT_ID:-}
+      KEYCLOAK_GOOGLE_CLIENT_SECRET: ${KEYCLOAK_GOOGLE_CLIENT_SECRET:-}
+      KEYCLOAK_GITHUB_CLIENT_ID: ${KEYCLOAK_GITHUB_CLIENT_ID:-}
+      KEYCLOAK_GITHUB_CLIENT_SECRET: ${KEYCLOAK_GITHUB_CLIENT_SECRET:-}
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./back-end/docker/keycloak/realm-craftpg.json:/opt/keycloak/data/import/realm-craftpg.json:ro
+      - ./back-end/docker/keycloak/themes:/opt/keycloak/themes:ro
+    depends_on:
+      - keycloak-db
+    networks:
+      - craftpg-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: craftpg-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minio12345}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - craftpg-network
+
+  createbuckets:
+    image: minio/mc
+    container_name: craftpg-createbuckets
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_ROOT_USER:-minio} ${MINIO_ROOT_PASSWORD:-minio12345};
+      /usr/bin/mc mb myminio/${MINIO_BUCKET_MAPS:-campaign-maps};
+      /usr/bin/mc mb myminio/${MINIO_BUCKET_PORTRAITS:-character-portraits};
+      /usr/bin/mc anonymous set public myminio/${MINIO_BUCKET_MAPS:-campaign-maps};
+      /usr/bin/mc anonymous set public myminio/${MINIO_BUCKET_PORTRAITS:-character-portraits};
+      exit 0;
+      "
+    networks:
+      - craftpg-network
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: craftpg-mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - craftpg-network
+
+networks:
+  craftpg-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  keycloak_db_data:
+  minio_data:
