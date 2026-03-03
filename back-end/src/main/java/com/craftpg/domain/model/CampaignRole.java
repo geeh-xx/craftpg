@@ -1,6 +1,6 @@
 package com.craftpg.domain.model;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import com.craftpg.shared.constants.CampaignRoleType;
 import jakarta.persistence.Column;

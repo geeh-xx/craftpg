@@ -1,7 +1,7 @@
 package com.craftpg.domain.model;
 
 import com.craftpg.domain.input.CreateCampaignInput;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -65,3 +65,9 @@ export type NotificationItem = {
   readAt?: string;
   read: boolean;
 };
+
+export type MeProfile = {
+  id: string;
+  email: string;
+  displayName: string;
+};

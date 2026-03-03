@@ -434,6 +434,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MeResponse'
+    put:
+      tags: [Users]
+      operationId: mePut
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMeRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResponse'
 
 components:
   securitySchemes:
@@ -641,3 +657,11 @@ components:
         id: { type: string, format: uuid }
         email: { type: string, format: email }
         displayName: { type: string }
+
+    UpdateMeRequest:
+      type: object
+      required: [displayName]
+      properties:
+        displayName:
+          type: string
+          minLength: 1

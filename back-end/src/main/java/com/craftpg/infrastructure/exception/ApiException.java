@@ -1,6 +1,6 @@
 package com.craftpg.infrastructure.exception;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public class ApiException extends RuntimeException {
 

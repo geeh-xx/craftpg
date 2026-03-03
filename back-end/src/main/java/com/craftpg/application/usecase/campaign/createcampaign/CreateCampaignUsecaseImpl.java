@@ -8,7 +8,7 @@ import com.craftpg.infrastructure.persistence.repository.CampaignRoleRepository;
 import com.craftpg.infrastructure.web.dto.CreateCampaignRequest;
 import com.craftpg.shared.constants.CampaignRoleType;
 import com.craftpg.infrastructure.security.currentuser.CurrentUserProvider;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

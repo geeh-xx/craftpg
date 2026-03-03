@@ -1,6 +1,6 @@
 package com.craftpg.application.usecase.invite.getinvitebytoken;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public interface GetInviteByTokenUsecase {
 

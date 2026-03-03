@@ -1,6 +1,6 @@
 package com.craftpg.application.mapper;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import com.craftpg.domain.model.Campaign;
 import com.craftpg.infrastructure.web.dto.CampaignResponse;

@@ -1,7 +1,7 @@
 package com.craftpg.infrastructure.notification;
 
 import com.craftpg.application.notification.InviteEmailSender;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

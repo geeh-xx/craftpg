@@ -1,7 +1,7 @@
 {
   "realm": "craftpg",
   "enabled": true,
-  "loginTheme": "craftpg",
+  "loginTheme": "keycloakify-starter",
   "registrationAllowed": true,
   "registrationEmailAsUsername": true,
   "verifyEmail": true,

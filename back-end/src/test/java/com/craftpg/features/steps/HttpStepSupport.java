@@ -115,7 +115,7 @@ abstract class HttpStepSupport {
 			java.io.StringWriter sw = new java.io.StringWriter();
 			java.io.PrintWriter pw = new java.io.PrintWriter(sw);
 			requestException.printStackTrace(pw);
-			return "Exception occurred: " + sw.toString();
+			return "Exception occurred: " + sw;
 		}
 		if (result == null) {
 			return "";

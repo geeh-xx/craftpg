@@ -6,7 +6,7 @@ import com.craftpg.infrastructure.persistence.repository.CampaignCharacterReposi
 import com.craftpg.infrastructure.security.campaignpermission.CampaignPermissionAction;
 import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPermission;
 import com.craftpg.infrastructure.web.dto.AddCampaignCharacterXpRequest;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

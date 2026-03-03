@@ -28,6 +28,13 @@ spring:
           issuer-uri: http://localhost:8081/realms/craftpg
 
 app:
+  keycloak:
+    base-url: http://localhost:8081
+    admin:
+      realm: master
+      client-id: admin-cli
+      username: admin
+      password: admin
   invite:
     base-url: ${APP_INVITE_BASE_URL:http://localhost:3000/invites}
     mail-from: ${APP_INVITE_MAIL_FROM:noreply@craftpg.local}

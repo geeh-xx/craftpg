@@ -1,6 +1,6 @@
 package com.craftpg.infrastructure.security.campaignpermission;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.UUID;
 

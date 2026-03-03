@@ -2,7 +2,7 @@ package com.craftpg.application.mapper;
 
 import com.craftpg.domain.model.Notification;
 import com.craftpg.infrastructure.web.dto.NotificationResponse;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component

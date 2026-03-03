@@ -11,7 +11,7 @@ import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPer
 import com.craftpg.infrastructure.web.dto.CreateInviteRequest;
 import com.craftpg.shared.constants.CampaignRoleType;
 import com.craftpg.shared.util.HashUtil;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;

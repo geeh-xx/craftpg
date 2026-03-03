@@ -4,7 +4,7 @@ import com.craftpg.domain.model.CampaignSession;
 import com.craftpg.infrastructure.persistence.repository.CampaignSessionRepository;
 import com.craftpg.infrastructure.security.campaignpermission.CampaignPermissionAction;
 import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPermission;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

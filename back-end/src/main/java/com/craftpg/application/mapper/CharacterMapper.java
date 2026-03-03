@@ -4,7 +4,7 @@ import com.craftpg.domain.model.CampaignCharacter;
 import com.craftpg.domain.model.CharacterBase;
 import com.craftpg.infrastructure.web.dto.CampaignCharacterResponse;
 import com.craftpg.infrastructure.web.dto.CharacterResponse;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component

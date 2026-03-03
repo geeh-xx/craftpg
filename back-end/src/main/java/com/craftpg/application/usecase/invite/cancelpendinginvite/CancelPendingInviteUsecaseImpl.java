@@ -5,7 +5,7 @@ import com.craftpg.infrastructure.persistence.repository.CampaignInviteRepositor
 import com.craftpg.infrastructure.security.campaignpermission.CampaignPermissionAction;
 import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPermission;
 import java.util.UUID;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,7 +2,7 @@ package com.craftpg.application.mapper;
 
 import com.craftpg.domain.model.AppUser;
 import com.craftpg.infrastructure.web.dto.MeResponse;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component

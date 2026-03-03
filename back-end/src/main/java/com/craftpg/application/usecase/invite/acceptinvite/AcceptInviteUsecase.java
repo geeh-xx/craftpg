@@ -1,6 +1,6 @@
 package com.craftpg.application.usecase.invite.acceptinvite;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.UUID;
 

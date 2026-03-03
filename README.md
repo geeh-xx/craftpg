@@ -26,4 +26,12 @@ docker-compose up -d
 
 3. Keycloak will be available at `http://localhost:8081`, Minio at `http://localhost:9000` (Console at `:9001`), Mailhog at `http://localhost:8025`.
 
+## Keycloak Login Theme with Keycloakify
+
+- Workspace: `front-end/keycloakify-login-theme`
+- Install dependencies: `cd front-end && npm run kc:install`
+- Build and copy theme jar to local Keycloak providers folder: `cd front-end && npm run kc:deploy`
+- Restart Keycloak: `docker compose restart keycloak`
+- Then select `keycloakify-starter` in Keycloak Admin (Realm Settings → Themes).
+
 Please refer to the Makefiles in `back-end` and `front-end` for run instructions.

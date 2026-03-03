@@ -2,7 +2,7 @@ package com.craftpg.application.mapper;
 
 import com.craftpg.domain.model.CampaignSession;
 import com.craftpg.infrastructure.web.dto.SessionResponse;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,6 +1,6 @@
 package com.craftpg.infrastructure.persistence.repository;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import com.craftpg.domain.model.CampaignRole;
 import com.craftpg.domain.model.CampaignRoleId;

@@ -1,6 +1,6 @@
 package com.craftpg.infrastructure.web.controller;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import com.craftpg.application.mapper.InviteMapper;
 import com.craftpg.application.usecase.invite.acceptinvite.AcceptInviteUsecase;

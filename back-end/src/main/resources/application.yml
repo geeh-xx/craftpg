@@ -33,6 +33,13 @@ spring:
           issuer-uri: ${KEYCLOAK_ISSUER_URI}
 
 app:
+  keycloak:
+    base-url: ${APP_KEYCLOAK_BASE_URL}
+    admin:
+      realm: ${APP_KEYCLOAK_ADMIN_REALM}
+      client-id: ${APP_KEYCLOAK_ADMIN_CLIENT_ID}
+      username: ${APP_KEYCLOAK_ADMIN_USERNAME}
+      password: ${APP_KEYCLOAK_ADMIN_PASSWORD}
   invite:
     base-url: ${APP_INVITE_BASE_URL:http://localhost:3000/invites}
     mail-from: ${APP_INVITE_MAIL_FROM:noreply@craftpg.local}

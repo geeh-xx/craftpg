@@ -5,7 +5,7 @@ import com.craftpg.domain.model.CharacterBase;
 import com.craftpg.infrastructure.persistence.repository.CharacterBaseRepository;
 import com.craftpg.infrastructure.security.currentuser.CurrentUserProvider;
 import com.craftpg.infrastructure.web.dto.CreateCharacterRequest;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

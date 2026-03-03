@@ -2,7 +2,7 @@ package com.craftpg.application.usecase.character.createcharacter;
 
 import com.craftpg.domain.model.CharacterBase;
 import com.craftpg.infrastructure.web.dto.CreateCharacterRequest;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public interface CreateCharacterUsecase {
 

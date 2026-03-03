@@ -1,6 +1,6 @@
 package com.craftpg.application.usecase.invite.acceptinvite;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import com.craftpg.domain.model.CampaignCharacter;
 import com.craftpg.domain.model.CampaignMembership;

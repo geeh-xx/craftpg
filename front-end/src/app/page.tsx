@@ -21,7 +21,7 @@ export default async function LandingPage() {
             <NavbarLink href="#how" className="inline-flex h-10 items-center text-slate-600">How It Works</NavbarLink>
             <NavbarLink href="#pricing" className="inline-flex h-10 items-center text-slate-600">Pricing</NavbarLink>
             <Button href="/login" className="inline-flex h-10 items-center bg-blue-600 px-4 font-semibold text-white hover:bg-blue-700">Login</Button>
-            <Button href="/login" className="inline-flex h-10 items-center bg-blue-600 px-4 font-semibold text-white hover:bg-blue-700">Sign Up</Button>
+            <Button href="/register" className="inline-flex h-10 items-center bg-blue-600 px-4 font-semibold text-white hover:bg-blue-700">Sign Up</Button>
           </NavbarCollapse>
         </Navbar>
 
@@ -121,7 +121,7 @@ export default async function LandingPage() {
         <section id="pricing" className="px-6 py-10 text-center md:px-10">
           <h2 className="text-5xl font-semibold text-slate-800">Get Started Today!</h2>
           <div className="mt-4 flex flex-wrap justify-center gap-3">
-            <Button href="/login" size="lg" className="bg-blue-600 hover:bg-blue-700">Sign Up</Button>
+            <Button href="/register" size="lg" className="bg-blue-600 hover:bg-blue-700">Sign Up</Button>
             <Button href="#how" color="light" size="lg" className="border-slate-300 text-slate-700">Learn More</Button>
           </div>
         </section>

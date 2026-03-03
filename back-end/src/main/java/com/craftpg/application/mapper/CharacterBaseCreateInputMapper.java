@@ -2,7 +2,7 @@ package com.craftpg.application.mapper;
 
 import com.craftpg.domain.input.CreateCharacterBaseInput;
 import com.craftpg.infrastructure.web.dto.CreateCharacterRequest;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.util.UUID;
 import org.springframework.stereotype.Component;
 

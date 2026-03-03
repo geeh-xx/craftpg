@@ -5,7 +5,7 @@ import com.craftpg.infrastructure.exception.ApiException;
 import com.craftpg.infrastructure.persistence.repository.CampaignCharacterRepository;
 import com.craftpg.infrastructure.security.currentuser.CurrentUserProvider;
 import com.craftpg.infrastructure.web.dto.UpdateCampaignCharacterRequest;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

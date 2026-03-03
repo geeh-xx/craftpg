@@ -1,7 +1,7 @@
 package com.craftpg.domain.input;
 
 import java.util.UUID;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public record CreateCharacterBaseInput(
     @NonNull UUID ownerUserId,

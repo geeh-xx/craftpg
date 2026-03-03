@@ -1,6 +1,6 @@
 package com.craftpg.infrastructure.configuration;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import com.craftpg.infrastructure.exception.ApiException;
 import java.util.Map;

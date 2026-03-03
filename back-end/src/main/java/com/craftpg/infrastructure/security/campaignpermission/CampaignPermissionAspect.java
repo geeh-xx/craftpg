@@ -2,7 +2,7 @@ package com.craftpg.infrastructure.security.campaignpermission;
 
 import com.craftpg.infrastructure.exception.ApiException;
 import com.craftpg.infrastructure.security.currentuser.CurrentUserProvider;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;

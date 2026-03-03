@@ -2,3 +2,17 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: off
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/craftpg
+
+app:
+  keycloak:
+    base-url: http://localhost:8081
+    admin:
+      realm: master
+      client-id: admin-cli
+      username: admin
+      password: admin

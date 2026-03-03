@@ -111,7 +111,7 @@ public class InviteLifecycleSteps extends HttpStepSupport {
 
             Assertions.assertFalse(campaignTitle == null || campaignTitle.isBlank(), "campaignTitle is missing");
             Assertions.assertFalse(dmName == null || dmName.isBlank(), "dmName is missing");
-            Assertions.assertTrue(roles.isArray() && roles.size() > 0, "roles must be a non-empty array");
+            Assertions.assertTrue(roles.isArray() && !roles.isEmpty(), "roles must be a non-empty array");
         } catch (Exception ex) {
             throw new IllegalStateException("Unable to parse invite preview response", ex);
         }

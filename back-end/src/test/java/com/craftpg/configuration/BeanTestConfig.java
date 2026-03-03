@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,7 +17,7 @@ public class BeanTestConfig {
 
     @Bean
     SecurityFilterChain testChain(HttpSecurity http) {
-        return http.csrf(csrf -> csrf.disable())
+        return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
                 .build();
     }
@@ -29,7 +30,7 @@ public class BeanTestConfig {
             .subject(UUID.fromString("00000000-0000-0000-0000-000000000001").toString())
             .claim("email", "cucumber@craftpg.test")
             .claim("preferred_username", "cucumber-user")
-            .claims(claims -> claims.putAll(Map.of("scope", "openid")))
+            .claims(claims -> claims.put("scope", "openid"))
             .issuedAt(Instant.now())
             .expiresAt(Instant.now().plusSeconds(3600))
             .build();

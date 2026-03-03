@@ -1,7 +1,7 @@
 package com.craftpg.application.usecase.notification.marknotificationread;
 
 import com.craftpg.domain.model.Notification;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.util.UUID;
 
 public interface MarkNotificationReadUsecase {

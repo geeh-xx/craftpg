@@ -1,12 +1,12 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-import { LoginModal } from "@/components/auth/login-modal";
+"use client";
 
-export default async function LoginPage() {
-  const session = await auth();
-  if (session) {
-    redirect("/app");
-  }
+import { useEffect } from "react";
+import { signIn } from "next-auth/react";
 
-  return <LoginModal />;
+export default function LoginPage() {
+  useEffect(() => {
+    void signIn("keycloak", { callbackUrl: "/app" });
+  }, []);
+
+  return null;
 }

@@ -1,7 +1,7 @@
 package com.craftpg.application.usecase.invite.getinvitebytoken;
 
 import com.craftpg.domain.model.CampaignInvite;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public record InvitePreviewData(
     @NonNull CampaignInvite invite,

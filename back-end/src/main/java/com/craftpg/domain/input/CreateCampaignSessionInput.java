@@ -2,7 +2,7 @@ package com.craftpg.domain.input;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public record CreateCampaignSessionInput(
     @NonNull UUID campaignId,

@@ -1,6 +1,6 @@
 package com.craftpg.domain.model;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

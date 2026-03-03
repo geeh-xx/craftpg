@@ -1,0 +1,275 @@
+:root {
+  --craftpg-bg-1: #0b1020;
+  --craftpg-bg-2: #151f3d;
+  --craftpg-bg-3: #1d2f5f;
+  --craftpg-card: #f8fafc;
+  --craftpg-border: #d9e2f5;
+  --craftpg-text: #0f172a;
+  --craftpg-muted: #64748b;
+  --craftpg-primary: #1d4ed8;
+  --craftpg-primary-hover: #1e40af;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  color: var(--craftpg-text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background:
+    radial-gradient(1000px 420px at -10% -20%, rgba(59, 130, 246, 0.28), transparent 70%),
+    radial-gradient(900px 360px at 110% 120%, rgba(99, 102, 241, 0.22), transparent 70%),
+    linear-gradient(135deg, var(--craftpg-bg-1), var(--craftpg-bg-2) 45%, var(--craftpg-bg-3));
+}
+
+#kc-header-wrapper {
+  color: #f8fafc;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  margin: 0 0 16px;
+}
+
+#kc-content-wrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.login-pf-page .card-pf,
+.login-pf-page .pf-v5-c-card,
+.card-pf {
+  width: min(100%, 520px);
+  margin: 0 auto;
+  background: var(--craftpg-card);
+  border: 1px solid var(--craftpg-border);
+  border-radius: 14px;
+  box-shadow: 0 18px 36px rgba(2, 6, 23, 0.2);
+}
+
+#kc-page-title {
+  color: var(--craftpg-text);
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 1.15;
+  margin: 0 0 18px;
+}
+
+.login-pf-page .row {
+  display: block;
+  margin: 0;
+}
+
+.login-pf-page [class*="col-"] {
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
+
+#kc-form-wrapper,
+#kc-info-wrapper,
+#kc-social-providers {
+  width: 100%;
+  float: none;
+  clear: both;
+}
+
+#kc-form-login .form-group {
+  margin-bottom: 14px;
+}
+
+#kc-form-login label {
+  font-size: 16px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+#kc-form-login input[type="text"],
+#kc-form-login input[type="password"],
+#kc-form-login input[type="email"] {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 10px;
+  border: 1px solid #b9c7dd;
+  background: #eef2f7;
+  color: var(--craftpg-text);
+  font-size: 16px;
+}
+
+#kc-form-login input:focus {
+  border-color: #60a5fa;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.22);
+}
+
+#kc-form-buttons {
+  margin-top: 14px;
+}
+
+#kc-login {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid var(--craftpg-primary);
+  background: linear-gradient(180deg, #2563eb, var(--craftpg-primary));
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+#kc-login:hover {
+  background: linear-gradient(180deg, #1d4ed8, var(--craftpg-primary-hover));
+  border-color: var(--craftpg-primary-hover);
+}
+
+#kc-form-options,
+#kc-registration {
+  color: var(--craftpg-muted);
+}
+
+#kc-registration {
+  margin-top: 10px;
+}
+
+#kc-social-providers {
+  margin-top: 16px;
+}
+
+#kc-social-providers ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#kc-social-providers li {
+  width: 100%;
+}
+
+#kc-social-providers a {
+  width: 100%;
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 14px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#kc-social-providers a > span,
+#kc-social-providers a > i,
+#kc-social-providers .kc-social-icon,
+#kc-social-providers .kc-social-provider-name,
+#kc-social-providers .zocial,
+#kc-social-providers .fa,
+#kc-social-providers .fab {
+  position: static !important;
+  float: none !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  line-height: 1 !important;
+}
+
+#kc-social-providers .kc-social-provider-name,
+#kc-social-providers a > span:last-child {
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+#kc-social-providers .zocial:before,
+#kc-social-providers .fa:before,
+#kc-social-providers .fab:before {
+  position: static !important;
+  margin-right: 8px;
+  line-height: 1 !important;
+}
+
+#kc-social-providers a[href*="/broker/google/login"],
+#kc-social-providers .zocial.google {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+  color: #1f2937 !important;
+}
+
+#kc-social-providers a[href*="/broker/github/login"],
+#kc-social-providers .zocial.github {
+  background: #24292f !important;
+  border-color: #24292f !important;
+  color: #ffffff !important;
+}
+
+#kc-registration a,
+#kc-form-options a {
+  color: #1d4ed8 !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#kc-registration,
+#kc-registration * {
+  color: var(--craftpg-muted) !important;
+}
+
+#kc-registration a,
+#kc-info-wrapper #kc-registration a {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  color: #1d4ed8 !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#kc-registration a:hover,
+#kc-info-wrapper #kc-registration a:hover {
+  background: transparent;
+  border: 0;
+  color: #1e40af !important;
+  text-decoration: underline;
+}
+
+#kc-registration a:hover,
+#kc-form-options a:hover,
+#kc-social-providers a:hover {
+  color: inherit;
+}
+
+#kc-register-form .form-group:has(input[name="lastName"]),
+#kc-register-form .pf-v5-c-form__group:has(input[name="lastName"]),
+#kc-register-form label[for="lastName"],
+#kc-register-form input[name="lastName"] {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  #kc-content-wrapper {
+    padding: 16px;
+  }
+
+  .login-pf-page .card-pf,
+  .card-pf {
+    width: 100%;
+    margin: 0;
+    border-radius: 12px;
+  }
+}

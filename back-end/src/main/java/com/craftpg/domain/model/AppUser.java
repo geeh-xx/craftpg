@@ -1,6 +1,6 @@
 package com.craftpg.domain.model;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,5 +42,10 @@ public class AppUser {
         user.createdAt = now;
         user.updatedAt = now;
         return user;
+    }
+
+    public void updateDisplayName(@NonNull final String displayName) {
+        this.displayName = displayName;
+        this.updatedAt = LocalDateTime.now();
     }
 }

@@ -3,7 +3,7 @@ package com.craftpg.application.usecase.campaign.deletecampaign;
 import com.craftpg.infrastructure.persistence.repository.CampaignRepository;
 import com.craftpg.infrastructure.security.campaignpermission.CampaignPermissionAction;
 import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPermission;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

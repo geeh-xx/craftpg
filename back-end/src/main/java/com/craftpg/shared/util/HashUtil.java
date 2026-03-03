@@ -1,6 +1,6 @@
 package com.craftpg.shared.util;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

@@ -1,6 +1,6 @@
 package com.craftpg.application.usecase.campaign.getcampaign;
 
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import com.craftpg.domain.model.Campaign;
 import java.util.UUID;

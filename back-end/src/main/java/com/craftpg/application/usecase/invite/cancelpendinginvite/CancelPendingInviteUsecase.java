@@ -1,7 +1,7 @@
 package com.craftpg.application.usecase.invite.cancelpendinginvite;
 
 import java.util.UUID;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public interface CancelPendingInviteUsecase {
 

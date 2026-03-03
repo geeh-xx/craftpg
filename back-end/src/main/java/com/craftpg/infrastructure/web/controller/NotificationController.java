@@ -7,7 +7,7 @@ import com.craftpg.infrastructure.web.api.NotificationsApi;
 import com.craftpg.infrastructure.web.dto.NotificationResponse;
 import java.util.List;
 import java.util.UUID;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

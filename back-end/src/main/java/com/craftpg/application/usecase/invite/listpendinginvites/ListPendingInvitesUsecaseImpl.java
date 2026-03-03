@@ -6,7 +6,7 @@ import com.craftpg.infrastructure.security.campaignpermission.CampaignPermission
 import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPermission;
 import java.util.List;
 import java.util.UUID;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "kc:install": "npm --prefix keycloakify-login-theme install",
+    "kc:storybook": "npm --prefix keycloakify-login-theme run storybook",
+    "kc:dev": "npm --prefix keycloakify-login-theme run dev",
+    "kc:build": "npm --prefix keycloakify-login-theme run build-keycloak-theme",
+    "kc:deploy": "npm --prefix keycloakify-login-theme run deploy-craftpg"
   },
   "dependencies": {
     "flowbite": "^3.1.2",

@@ -155,7 +155,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
   pages: {
-    signIn: "/login",
     signOut: "/logout",
   },
 });

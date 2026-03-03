@@ -36,7 +36,7 @@ public class AppUserSyncService {
             throw new IllegalArgumentException("invalid jwt subject", ex);
         }
 
-        var email = firstNonBlank(jwt.getClaimAsString("email"), jwt.getClaimAsString("preferred_username"));
+        var email = jwt.getClaimAsString("email");
         if (email == null) {
             throw new IllegalArgumentException("jwt has no usable email claim");
         }
@@ -50,7 +50,6 @@ public class AppUserSyncService {
 
         return appUserRepository
             .findById(userId)
-            .map(existingUser -> existingUser)
             .orElseGet(() -> appUserRepository.save(AppUser.create(userId, email, displayName)));
     }
 
@@ -60,6 +59,6 @@ public class AppUserSyncService {
                 return value;
             }
         }
-        return null;
+        return "unknown";
     }
 }

@@ -1,6 +1,7 @@
 package com.craftpg.domain.input;
 
-import lombok.NonNull;
+
+import org.jspecify.annotations.NonNull;
 
 public record CreateCampaignInput(
     @NonNull String title,

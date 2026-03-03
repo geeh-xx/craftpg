@@ -2,7 +2,7 @@ package com.craftpg.application.usecase.session.updatesession;
 
 import com.craftpg.domain.model.CampaignSession;
 import com.craftpg.infrastructure.web.dto.UpdateSessionRequest;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.util.UUID;
 
 public interface UpdateSessionUsecase {
