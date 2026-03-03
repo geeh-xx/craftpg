@@ -1,18 +1,12 @@
 import { revalidatePath } from "next/cache";
 import { Badge, Button, Card, Label, TabItem, Tabs, TextInput } from "flowbite-react";
 import { apiFetch } from "@/lib/api-client";
-
-type Character = {
-  id: string;
-  name: string;
-  race?: string;
-  clazz?: string;
-  attributesJson?: string;
-};
+import { CreateCharacterForm } from "@/components/characters/create-character-form";
+import { CharacterBase } from "@/lib/api-types";
 
 async function createCharacter(formData: FormData) {
   "use server";
-  await apiFetch<Character>("/characters", {
+  await apiFetch<CharacterBase>("/characters", {
     method: "POST",
     body: JSON.stringify({
       name: String(formData.get("name") || ""),
@@ -26,16 +20,16 @@ async function createCharacter(formData: FormData) {
 
 async function generateRandomCharacter() {
   "use server";
-  await apiFetch<Character>("/characters/generate-random", {
+  await apiFetch<CharacterBase>("/characters/generate-random", {
     method: "POST",
   });
   revalidatePath("/app/characters");
 }
 
 export default async function CharactersPage() {
-  let characters: Character[] = [];
+  let characters: CharacterBase[] = [];
   try {
-    characters = await apiFetch<Character[]>("/characters");
+    characters = await apiFetch<CharacterBase[]>("/characters");
   } catch {
     characters = [];
   }
@@ -63,32 +57,7 @@ export default async function CharactersPage() {
 
       <Card>
         <h2 className="text-xl font-semibold">Create character</h2>
-        <form action={createCharacter} className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          <div>
-            <Label htmlFor="name">Name</Label>
-            <TextInput id="name" name="name" required />
-          </div>
-          <div>
-            <Label htmlFor="race">Race</Label>
-            <TextInput id="race" name="race" />
-          </div>
-          <div>
-            <Label htmlFor="clazz">Class</Label>
-            <TextInput id="clazz" name="clazz" />
-          </div>
-          <div>
-            <Label htmlFor="attributesJson">Attributes JSON</Label>
-            <TextInput id="attributesJson" name="attributesJson" defaultValue="{}" />
-          </div>
-          <div className="md:col-span-2 flex gap-3">
-            <Button type="submit" color="blue" className="flex-1">
-              Salvar
-            </Button>
-            <Button type="submit" formAction={generateRandomCharacter} color="light" className="flex-1">
-              Generate random
-            </Button>
-          </div>
-        </form>
+        <CreateCharacterForm createAction={createCharacter} generateAction={generateRandomCharacter} />
       </Card>
 
       {characters.length === 0 ? <Card>Create your first character.</Card> : (
@@ -98,7 +67,7 @@ export default async function CharactersPage() {
               <h2 className="text-xl font-semibold">{character.name}</h2>
               <p className="text-slate-600">Class: {character.clazz || "-"}</p>
               <p className="text-slate-600">Ruleset: Tormenta20</p>
-              <Button color="light">Open</Button>
+              <Button color="light" href={`/app/characters/${character.id}`}>Open</Button>
               <Tabs aria-label="Character tabs" variant="underline">
                 <TabItem active title="Attributes"><pre className="overflow-x-auto text-xs">{character.attributesJson ?? "{}"}</pre></TabItem>
                 <TabItem title="Skills">Skills preview.</TabItem>
