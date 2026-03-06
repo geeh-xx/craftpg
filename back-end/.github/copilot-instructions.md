@@ -141,12 +141,28 @@ make infra-reset
 
 **Every feature must have a Cucumber `.feature` file written in Gherkin syntax.**
 
+### BDD-First Backend Scaffold Workflow
+
+The recommended way to implement a new backend feature is:
+
+1. **Write the `.feature` file first** — place it in `src/test/resources/features/<domain>/`
+2. **Run the BDD Backend Scaffold agent** — open the `.feature` file in the editor and invoke the `bdd-backend-scaffold.prompt.md` prompt (or the `BDD Backend Scaffold` agent).
+   The agent will generate **all** backend artifacts in the correct order:
+   - OpenAPI spec update → `mvn generate-sources`
+   - Domain model entity + Input record
+   - JPA Repository
+   - Use case interface(s) + implementation(s)
+   - Mapper
+   - Controller
+   - Step definitions
+   - Unit tests
+
 ### Cucumber Rules
 
 - **ALWAYS** create a `.feature` file when implementing a new feature
 - Feature files are located in `src/test/resources/features/<domain>/`
-- Step definitions are located in `src/test/java/com/craftpg/features/steps/<domain>/`
-- Runner classes are located in `src/test/java/com/craftpg/features/runner/`
+- Step definitions are located in `src/test/java/com/craftpg/features/steps/`
+- Runner class: `src/test/java/com/craftpg/CucumberRunner.java`
 - Use `@SpringBootTest` + `@CucumberContextConfiguration` for Spring integration
 - Scenarios must follow the `Given / When / Then` structure
 - Each `Scenario` or `Scenario Outline` must map to a use case or business rule
@@ -155,8 +171,8 @@ make infra-reset
 ### Cucumber File Naming
 
 - Feature files: `<domain>-<feature>.feature` (e.g., `invite-acceptance.feature`)
-- Step definitions: `<Domain><Feature>Steps.java` (e.g., `InviteAcceptanceSteps.java`)
-- Runner: `<Domain>CucumberRunner.java` (e.g., `InviteCucumberRunner.java`)
+- Step definitions: `<Domain>ManagementSteps.java` (e.g., `InviteLifecycleSteps.java`)
+- Runner: `CucumberRunner.java` (shared across all domains)
 
 ## Code Quality and Security
 
