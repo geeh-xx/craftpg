@@ -406,6 +406,34 @@ paths:
                 items:
                   $ref: '#/components/schemas/NotificationResponse'
 
+  /notifications/unread:
+    get:
+      tags: [Notifications]
+      operationId: notificationsUnreadGet
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationResponse'
+
+  /notifications/read-all:
+    post:
+      tags: [Notifications]
+      operationId: notificationsReadAllPost
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationResponse'
+
   /notifications/{notificationId}/read:
     post:
       tags: [Notifications]
