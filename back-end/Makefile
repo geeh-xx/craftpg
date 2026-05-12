@@ -25,5 +25,8 @@ run:
 gen-api:
 	mvn generate-sources
 
+docs-install:
+	@cd docs && npm install
+
 docs:
 	cd docs/documentation && npx antora antora-playbook.yml

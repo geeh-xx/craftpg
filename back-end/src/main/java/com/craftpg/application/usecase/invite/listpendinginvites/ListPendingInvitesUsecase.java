@@ -1,11 +1,11 @@
 package com.craftpg.application.usecase.invite.listpendinginvites;
 
-import com.craftpg.domain.model.CampaignInvite;
+import com.craftpg.domain.model.campaign.CampaignInvite;
+
 import java.util.List;
 import java.util.UUID;
-import org.jspecify.annotations.NonNull;
 
 public interface ListPendingInvitesUsecase {
 
-    List<CampaignInvite> execute(@NonNull UUID campaignId);
+    List<CampaignInvite> execute(UUID campaignId);
 }

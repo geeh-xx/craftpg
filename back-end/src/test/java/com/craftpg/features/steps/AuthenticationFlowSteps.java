@@ -7,10 +7,11 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.HashMap;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.junit.jupiter.api.Assertions;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -31,9 +32,9 @@ public class AuthenticationFlowSteps extends HttpStepSupport {
     @Before("@auth")
     public void setUpAuthServiceClientStub() {
         when(authServiceClient.getAdminToken(anyString(), any()))
-            .thenReturn(new AuthServiceClient.KeycloakTokenResponse("token-value"));
+                .thenReturn(new AuthServiceClient.KeycloakTokenResponse("token-value"));
         when(authServiceClient.getUser(anyString(), any(UUID.class), anyString()))
-            .thenReturn(new HashMap<>());
+                .thenReturn(new HashMap<>());
     }
 
     @Given("the authentication API route {string} {string}")
@@ -76,7 +77,7 @@ public class AuthenticationFlowSteps extends HttpStepSupport {
     @Then("the authenticated user display name is {string} in the database")
     public void theAuthenticatedUserDisplayNameIsInTheDatabase(final String expectedDisplayName) {
         var user = appUserRepository.findById(CUCUMBER_USER_ID)
-            .orElseThrow(() -> new IllegalStateException("Cucumber user was not found in database"));
+                .orElseThrow(() -> new IllegalStateException("Cucumber user was not found in database"));
 
         Assertions.assertEquals(expectedDisplayName, user.getDisplayName());
     }

@@ -2,13 +2,13 @@ package com.craftpg.infrastructure.security.campaignpermission;
 
 import com.craftpg.infrastructure.exception.ApiException;
 import com.craftpg.infrastructure.security.currentuser.CurrentUserProvider;
-import org.jspecify.annotations.NonNull;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Aspect
 @Component
@@ -19,7 +19,7 @@ public class CampaignPermissionAspect {
     private final CurrentUserProvider currentUserProvider;
 
     @Before("@annotation(requireCampaignPermission)")
-    public void validatePermission(@NonNull final JoinPoint joinPoint, @NonNull final RequireCampaignPermission requireCampaignPermission) {
+    public void validatePermission(final JoinPoint joinPoint, final RequireCampaignPermission requireCampaignPermission) {
         var args = joinPoint.getArgs();
         var campaignIdArgIndex = requireCampaignPermission.campaignIdArgIndex();
         if (campaignIdArgIndex < 0 || campaignIdArgIndex >= args.length) {

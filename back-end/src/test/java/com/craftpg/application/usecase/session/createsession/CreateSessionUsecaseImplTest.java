@@ -1,23 +1,24 @@
 package com.craftpg.application.usecase.session.createsession;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.craftpg.application.mapper.CampaignSessionCreateInputMapper;
 import com.craftpg.domain.input.CreateCampaignSessionInput;
-import com.craftpg.domain.model.CampaignSession;
+import com.craftpg.domain.model.campaign.CampaignSession;
 import com.craftpg.infrastructure.persistence.repository.CampaignSessionRepository;
 import com.craftpg.infrastructure.web.dto.CreateSessionRequest;
-import java.util.UUID;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CreateSessionUsecaseImplTest {

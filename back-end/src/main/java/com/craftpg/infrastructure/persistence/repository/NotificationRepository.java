@@ -1,9 +1,10 @@
 package com.craftpg.infrastructure.persistence.repository;
 
-import com.craftpg.domain.model.Notification;
+import com.craftpg.domain.model.notification.Notification;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 import java.util.UUID;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NotificationRepository extends JpaRepository<Notification, UUID> {
 

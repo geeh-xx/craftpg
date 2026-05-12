@@ -1,7 +1,5 @@
 package com.craftpg.infrastructure.configuration;
 
-import org.jspecify.annotations.NonNull;
-
 import com.craftpg.infrastructure.security.currentuser.JwtAppUserSyncFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,20 +16,19 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Bean
-    SecurityFilterChain securityFilterChain(
-        @NonNull final HttpSecurity http,
-        @NonNull final JwtAppUserSyncFilter jwtAppUserSyncFilter
+    SecurityFilterChain securityFilterChain(final HttpSecurity http, final JwtAppUserSyncFilter jwtAppUserSyncFilter
     ) {
         http
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
-                .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/invites/*").permitAll()
-                .anyRequest().authenticated())
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {}))
-            .addFilterAfter(jwtAppUserSyncFilter, BearerTokenAuthenticationFilter.class);
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/invites/*").permitAll()
+                        .anyRequest().authenticated())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {
+                }))
+                .addFilterAfter(jwtAppUserSyncFilter, BearerTokenAuthenticationFilter.class);
         return http.build();
     }
 }

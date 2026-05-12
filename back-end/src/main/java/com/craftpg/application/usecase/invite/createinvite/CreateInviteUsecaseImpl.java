@@ -1,8 +1,8 @@
 package com.craftpg.application.usecase.invite.createinvite;
 
 import com.craftpg.application.notification.InviteEmailSender;
-import com.craftpg.domain.model.CampaignInvite;
-import com.craftpg.domain.model.Notification;
+import com.craftpg.domain.model.campaign.CampaignInvite;
+import com.craftpg.domain.model.notification.Notification;
 import com.craftpg.infrastructure.persistence.repository.AppUserRepository;
 import com.craftpg.infrastructure.persistence.repository.CampaignInviteRepository;
 import com.craftpg.infrastructure.persistence.repository.NotificationRepository;
@@ -11,14 +11,15 @@ import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPer
 import com.craftpg.infrastructure.web.dto.CreateInviteRequest;
 import com.craftpg.shared.constants.CampaignRoleType;
 import com.craftpg.shared.util.HashUtil;
-import org.jspecify.annotations.NonNull;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +36,9 @@ public class CreateInviteUsecaseImpl implements CreateInviteUsecase {
     public String execute(@NonNull final UUID campaignId, @NonNull final CreateInviteRequest command) {
         var token = UUID.randomUUID().toString().replace("-", "") + UUID.randomUUID().toString().replace("-", "");
         var roles = command.getRoles().stream().map(String::toUpperCase)
-            .filter(v -> !"DM".equals(v))
-            .map(CampaignRoleType::valueOf)
-            .collect(Collectors.toSet());
+                .filter(v -> !"DM".equals(v))
+                .map(CampaignRoleType::valueOf)
+                .collect(Collectors.toSet());
         if (roles.isEmpty()) {
             roles = Set.of(CampaignRoleType.PLAYER);
         }
@@ -45,12 +46,12 @@ public class CreateInviteUsecaseImpl implements CreateInviteUsecase {
         campaignInviteRepository.save(invite);
 
         appUserRepository.findByEmailIgnoreCase(command.getEmail())
-            .ifPresent(user -> notificationRepository.save(Notification.createInviteNotification(
-                user.getId(),
-                campaignId,
-                command.getEmail(),
-                invite.getRolesJson()
-            )));
+                .ifPresent(user -> notificationRepository.save(Notification.createInviteNotification(
+                        user.getId(),
+                        campaignId,
+                        command.getEmail(),
+                        invite.getRolesJson()
+                )));
 
         inviteEmailSender.sendInviteEmail(command.getEmail(), token);
         return token;

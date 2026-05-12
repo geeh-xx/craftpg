@@ -1,6 +1,6 @@
 package com.craftpg.application.notification;
 
-import org.jspecify.annotations.NonNull;
+import lombok.NonNull;
 
 public interface InviteEmailSender {
 

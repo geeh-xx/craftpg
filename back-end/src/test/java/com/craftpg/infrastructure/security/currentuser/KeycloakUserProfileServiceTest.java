@@ -1,22 +1,22 @@
 package com.craftpg.infrastructure.security.currentuser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.craftpg.infrastructure.web.client.AuthServiceClient;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import java.util.HashMap;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class KeycloakUserProfileServiceTest {
@@ -43,9 +43,9 @@ class KeycloakUserProfileServiceTest {
         representation.put("email", "user@craftpg.test");
 
         when(authServiceClient.getAdminToken(anyString(), any()))
-            .thenReturn(new AuthServiceClient.KeycloakTokenResponse("token-value"));
+                .thenReturn(new AuthServiceClient.KeycloakTokenResponse("token-value"));
         when(authServiceClient.getUser(anyString(), any(UUID.class), anyString()))
-            .thenReturn(representation);
+                .thenReturn(representation);
 
         service.updateFirstName(userId, "Updated Name");
 
@@ -56,7 +56,7 @@ class KeycloakUserProfileServiceTest {
     @Test
     void updateFirstName_missingAccessToken_throws() {
         when(authServiceClient.getAdminToken(anyString(), any()))
-            .thenReturn(new AuthServiceClient.KeycloakTokenResponse(null));
+                .thenReturn(new AuthServiceClient.KeycloakTokenResponse(null));
 
         assertThrows(IllegalStateException.class, () -> service.updateFirstName(UUID.randomUUID(), "Name"));
     }
@@ -64,9 +64,9 @@ class KeycloakUserProfileServiceTest {
     @Test
     void updateFirstName_missingUserRepresentation_throws() {
         when(authServiceClient.getAdminToken(anyString(), any()))
-            .thenReturn(new AuthServiceClient.KeycloakTokenResponse("token-value"));
+                .thenReturn(new AuthServiceClient.KeycloakTokenResponse("token-value"));
         when(authServiceClient.getUser(anyString(), any(UUID.class), anyString()))
-            .thenReturn(null);
+                .thenReturn(null);
 
         assertThrows(IllegalStateException.class, () -> service.updateFirstName(UUID.randomUUID(), "Name"));
     }

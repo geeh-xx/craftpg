@@ -22,23 +22,23 @@ public class MeController implements UsersApi {
     private final MeMapper meMapper;
 
     @Override
-    public ResponseEntity<MeResponse> meGet() {
+    public ResponseEntity<MeResponse> getMe() {
         var user = appUserSyncService
-            .syncFromSecurityContext()
-            .orElseThrow(() -> new ApiException("unauthorized"));
+                .syncFromSecurityContext()
+                .orElseThrow(() -> new ApiException("unauthorized"));
 
         return ResponseEntity.ok(meMapper.toResponse(user));
     }
 
     @Override
-    public ResponseEntity<MeResponse> mePut(final UpdateMeRequest updateMeRequest) {
+    public ResponseEntity<MeResponse> updateMe(final UpdateMeRequest updateMeRequest) {
         var user = appUserSyncService
-            .syncFromSecurityContext()
-            .orElseThrow(() -> new ApiException("unauthorized"));
+                .syncFromSecurityContext()
+                .orElseThrow(() -> new ApiException("unauthorized"));
 
         var displayName = updateMeRequest.getDisplayName() == null
-            ? ""
-            : updateMeRequest.getDisplayName().trim();
+                ? ""
+                : updateMeRequest.getDisplayName().trim();
 
         if (displayName.isBlank()) {
             throw new ApiException("displayName must not be blank");

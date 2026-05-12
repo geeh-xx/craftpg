@@ -1,10 +1,8 @@
 package com.craftpg.application.usecase.invite.acceptinvite;
 
-import org.jspecify.annotations.NonNull;
-
-import com.craftpg.domain.model.CampaignCharacter;
-import com.craftpg.domain.model.CampaignMembership;
-import com.craftpg.domain.model.CampaignRole;
+import com.craftpg.domain.model.campaign.CampaignCharacter;
+import com.craftpg.domain.model.campaign.CampaignMembership;
+import com.craftpg.domain.model.campaign.CampaignRole;
 import com.craftpg.infrastructure.exception.ApiException;
 import com.craftpg.infrastructure.persistence.repository.CampaignCharacterRepository;
 import com.craftpg.infrastructure.persistence.repository.CampaignInviteRepository;
@@ -14,11 +12,13 @@ import com.craftpg.infrastructure.persistence.repository.CharacterBaseRepository
 import com.craftpg.infrastructure.security.currentuser.CurrentUserProvider;
 import com.craftpg.shared.constants.CampaignRoleType;
 import com.craftpg.shared.util.HashUtil;
-import java.util.Arrays;
-import java.util.UUID;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -56,9 +56,9 @@ public class AcceptInviteUsecaseImpl implements AcceptInviteUsecase {
         var roles = invite.getRolesJson().replace("[", "").replace("]", "").replace("\"", "");
         if (!roles.isBlank()) {
             Arrays.stream(roles.split(","))
-                .map(String::trim)
-                .filter(r -> !r.isBlank() && !"DM".equals(r))
-                .forEach(role -> campaignRoleRepository.save(CampaignRole.create(invite.getCampaignId(), userId, CampaignRoleType.valueOf(role))));
+                    .map(String::trim)
+                    .filter(r -> !r.isBlank() && !"DM".equals(r))
+                    .forEach(role -> campaignRoleRepository.save(CampaignRole.create(invite.getCampaignId(), userId, CampaignRoleType.valueOf(role))));
         }
 
         invite.accept(userId);

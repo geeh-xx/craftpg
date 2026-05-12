@@ -2,6 +2,17 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: off
+  mail:
+    host: localhost
+    port: 1025
+    username: ''
+    password: ''
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
   security:
     oauth2:
       resourceserver:
@@ -16,3 +27,11 @@ app:
       client-id: admin-cli
       username: admin
       password: admin
+  invite:
+    base-url: http://localhost:3000/invites
+    mail-from: noreply@craftpg.local
+  minio:
+    endpoint: http://localhost:9000
+    region: us-east-1
+    bucket-maps: campaign-maps
+    bucket-portraits: character-portraits

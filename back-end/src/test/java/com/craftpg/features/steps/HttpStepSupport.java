@@ -1,125 +1,129 @@
 package com.craftpg.features.steps;
 
-import java.nio.charset.StandardCharsets;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 abstract class HttpStepSupport {
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@Autowired
-	private WebApplicationContext webApplicationContext;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
-	private String method;
-	private String path;
-	private String payloadTemplate;
-	private boolean authenticated;
-	private MvcResult result;
-	private Exception requestException;
+    private String method;
+    private String path;
+    private String payloadTemplate;
+    private boolean authenticated;
+    private MvcResult result;
+    private Exception requestException;
 
-	protected void setRoute(final String method, final String path) {
-		this.method = method;
-		this.path = path;
-	}
+    protected void setRoute(final String method, final String path) {
+        this.method = method;
+        this.path = path;
+    }
 
-	protected void setPayloadTemplate(final String payloadTemplate) {
-		this.payloadTemplate = payloadTemplate;
-	}
+    protected void setPayloadTemplate(final String payloadTemplate) {
+        this.payloadTemplate = payloadTemplate;
+    }
 
-	protected void setAuthenticated(final boolean authenticated) {
-		this.authenticated = authenticated;
-	}
+    protected boolean hasPayloadTemplateConfigured() {
+        return payloadTemplate != null && !payloadTemplate.isBlank() && !"none".equalsIgnoreCase(payloadTemplate);
+    }
 
-	protected void sendRequest() {
-		requestException = null;
-		result = null;
+    protected void setAuthenticated(final boolean authenticated) {
+        this.authenticated = authenticated;
+    }
 
-		if (mockMvc == null) {
-			mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-					.apply(springSecurity())
-					.build();
-		}
+    protected void sendRequest() {
+        requestException = null;
+        result = null;
 
-		final String body;
-		if (payloadTemplate == null || "none".equalsIgnoreCase(payloadTemplate)) {
-			body = null;
-		} else {
-			final String payloadFile = "data/" + payloadTemplate + ".json";
-			try {
-				body = StreamUtils.copyToString(new ClassPathResource(payloadFile).getInputStream(),
-						StandardCharsets.UTF_8);
-			} catch (Exception ex) {
-				throw new IllegalStateException("Unable to read payload file: " + payloadFile, ex);
-			}
-		}
+        if (mockMvc == null) {
+            mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                    .apply(springSecurity())
+                    .build();
+        }
 
-		final HttpMethod httpMethod = HttpMethod.valueOf(method.toUpperCase());
+        final String body;
+        if (payloadTemplate == null || "none".equalsIgnoreCase(payloadTemplate)) {
+            body = null;
+        } else {
+            final String payloadFile = "data/" + payloadTemplate + ".json";
+            try {
+                body = StreamUtils.copyToString(new ClassPathResource(payloadFile).getInputStream(),
+                        StandardCharsets.UTF_8);
+            } catch (Exception ex) {
+                throw new IllegalStateException("Unable to read payload file: " + payloadFile, ex);
+            }
+        }
 
-		try {
-			var requestBuilder = MockMvcRequestBuilders
-					.request(httpMethod, path)
-					.accept(MediaType.APPLICATION_JSON)
-					.contentType(MediaType.APPLICATION_JSON);
+        final HttpMethod httpMethod = HttpMethod.valueOf(method.toUpperCase());
 
-			if (authenticated) {
-				requestBuilder = requestBuilder
-						.with(jwt().jwt(token -> token
-								.subject(UUID.fromString("00000000-0000-0000-0000-000000000001").toString())
-								.claim("email", "cucumber@craftpg.test")
-								.claim("preferred_username", "cucumber-user")));
-			}
+        try {
+            var requestBuilder = MockMvcRequestBuilders
+                    .request(httpMethod, path)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON);
 
-			if (body != null) {
-				requestBuilder = requestBuilder.content(body);
-			}
+            if (authenticated) {
+                requestBuilder = requestBuilder
+                        .with(jwt().jwt(token -> token
+                                .subject(UUID.fromString("00000000-0000-0000-0000-000000000001").toString())
+                                .claim("email", "cucumber@craftpg.test")
+                                .claim("preferred_username", "cucumber-user")));
+            }
 
-			result = mockMvc.perform(requestBuilder)
-					.andDo(print())
-					.andReturn();
-		} catch (Exception ex) {
-			requestException = ex;
-		}
-	}
+            if (body != null) {
+                requestBuilder = requestBuilder.content(body);
+            }
 
-	protected int getResponseStatus() {
-		if (requestException != null) {
-			return 500;
-		}
-		if (result == null) {
-			return 500;
-		}
-		return result.getResponse().getStatus();
-	}
+            result = mockMvc.perform(requestBuilder)
+                    .andDo(print())
+                    .andReturn();
+        } catch (Exception ex) {
+            requestException = ex;
+        }
+    }
 
-	protected Exception getRequestException() {
-		return requestException;
-	}
+    protected int getResponseStatus() {
+        if (requestException != null) {
+            return 500;
+        }
+        if (result == null) {
+            return 500;
+        }
+        return result.getResponse().getStatus();
+    }
 
-	protected String getResponseBody() {
-		if (requestException != null) {
-			java.io.StringWriter sw = new java.io.StringWriter();
-			java.io.PrintWriter pw = new java.io.PrintWriter(sw);
-			requestException.printStackTrace(pw);
-			return "Exception occurred: " + sw;
-		}
-		if (result == null) {
-			return "";
-		}
-		return new String(result.getResponse().getContentAsByteArray(), StandardCharsets.UTF_8);
-	}
+    protected Exception getRequestException() {
+        return requestException;
+    }
+
+    protected String getResponseBody() {
+        if (requestException != null) {
+            java.io.StringWriter sw = new java.io.StringWriter();
+            java.io.PrintWriter pw = new java.io.PrintWriter(sw);
+            requestException.printStackTrace(pw);
+            return "Exception occurred: " + sw;
+        }
+        if (result == null) {
+            return "";
+        }
+        return new String(result.getResponse().getContentAsByteArray(), StandardCharsets.UTF_8);
+    }
 }

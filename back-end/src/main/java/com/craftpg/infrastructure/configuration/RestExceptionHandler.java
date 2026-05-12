@@ -1,9 +1,6 @@
 package com.craftpg.infrastructure.configuration;
 
-import org.jspecify.annotations.NonNull;
-
 import com.craftpg.infrastructure.exception.ApiException;
-import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -11,21 +8,23 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Map;
+
 @RestControllerAdvice
 public class RestExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
-    ResponseEntity<Map<String, String>> apiException(@NonNull final ApiException ex) {
+    ResponseEntity<Map<String, String>> apiException(final ApiException ex) {
         return ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    ResponseEntity<Map<String, String>> denied(@NonNull final AccessDeniedException ex) {
+    ResponseEntity<Map<String, String>> denied(final AccessDeniedException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", "forbidden"));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<Map<String, String>> validation(@NonNull final MethodArgumentNotValidException ex) {
+    ResponseEntity<Map<String, String>> validation(final MethodArgumentNotValidException ex) {
         return ResponseEntity.badRequest().body(Map.of("message", "invalid request"));
     }
 }

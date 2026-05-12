@@ -1,25 +1,26 @@
 package com.craftpg.application.usecase.session.updatesession;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import com.craftpg.domain.model.CampaignSession;
+import com.craftpg.domain.model.campaign.CampaignSession;
 import com.craftpg.infrastructure.exception.ApiException;
 import com.craftpg.infrastructure.persistence.repository.CampaignSessionRepository;
 import com.craftpg.infrastructure.web.dto.UpdateSessionRequest;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UpdateSessionUsecaseImplTest {
@@ -56,15 +57,15 @@ class UpdateSessionUsecaseImplTest {
         // Then
         assertSame(session, result);
         verify(session).update(
-            "Session title",
-            command.getScheduledAt(),
-            "",
-            "",
-            "[]",
-            "[]",
-            "[]",
-            "[]",
-            "[]"
+                "Session title",
+                command.getScheduledAt(),
+                "",
+                "",
+                "[]",
+                "[]",
+                "[]",
+                "[]",
+                "[]"
         );
         verify(campaignSessionRepository).save(session);
     }

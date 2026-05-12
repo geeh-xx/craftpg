@@ -1,13 +1,9 @@
 package com.craftpg.domain.input;
 
 
-import org.jspecify.annotations.NonNull;
+import java.util.UUID;
 
-public record CreateCampaignInput(
-    @NonNull String title,
-    String description,
-    @NonNull String frequency,
-    @NonNull String status,
-    @NonNull Integer progressPercent
+public record CreateCampaignInput(UUID createBy, String title,
+                                  String description, String frequency, String status, Integer progressPercent
 ) {
 }

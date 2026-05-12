@@ -1,13 +1,14 @@
 package com.craftpg.infrastructure.security.currentuser;
 
-import com.craftpg.domain.model.AppUser;
+import com.craftpg.domain.model.user.AppUser;
 import com.craftpg.infrastructure.persistence.repository.AppUserRepository;
-import java.util.Optional;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -42,15 +43,15 @@ public class AppUserSyncService {
         }
 
         var displayName = firstNonBlank(
-            jwt.getClaimAsString("name"),
-            jwt.getClaimAsString("preferred_username"),
-            jwt.getClaimAsString("given_name"),
-            email
+                jwt.getClaimAsString("name"),
+                jwt.getClaimAsString("preferred_username"),
+                jwt.getClaimAsString("given_name"),
+                email
         );
 
         return appUserRepository
-            .findById(userId)
-            .orElseGet(() -> appUserRepository.save(AppUser.create(userId, email, displayName)));
+                .findById(userId)
+                .orElseGet(() -> appUserRepository.save(AppUser.create(userId, email, displayName)));
     }
 
     private String firstNonBlank(final String... values) {

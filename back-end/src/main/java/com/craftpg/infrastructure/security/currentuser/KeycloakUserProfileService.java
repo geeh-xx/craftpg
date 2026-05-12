@@ -1,14 +1,14 @@
 package com.craftpg.infrastructure.security.currentuser;
 
-import java.net.URI;
-import java.util.UUID;
-
 import com.craftpg.infrastructure.web.client.AuthServiceClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import java.net.URI;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
