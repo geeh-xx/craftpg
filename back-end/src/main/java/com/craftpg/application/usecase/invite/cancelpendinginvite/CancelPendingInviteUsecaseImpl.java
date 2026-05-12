@@ -4,11 +4,12 @@ import com.craftpg.infrastructure.exception.ApiException;
 import com.craftpg.infrastructure.persistence.repository.CampaignInviteRepository;
 import com.craftpg.infrastructure.security.campaignpermission.CampaignPermissionAction;
 import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPermission;
-import java.util.UUID;
-import org.jspecify.annotations.NonNull;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +20,9 @@ public class CancelPendingInviteUsecaseImpl implements CancelPendingInviteUsecas
     @Override
     @Transactional
     @RequireCampaignPermission(action = CampaignPermissionAction.INVITE)
-    public void execute(@NonNull UUID campaignId, @NonNull UUID inviteId) {
+    public void execute(@NonNull final UUID campaignId, @NonNull final UUID inviteId) {
         var invite = campaignInviteRepository.findByIdAndCampaignId(inviteId, campaignId)
-            .orElseThrow(() -> new ApiException("invite not found"));
+                .orElseThrow(() -> new ApiException("invite not found"));
 
         if (invite.isAccepted()) {
             throw new ApiException("invite already accepted");

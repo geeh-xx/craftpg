@@ -7,10 +7,17 @@ import org.junit.jupiter.api.Assertions;
 
 public class NotificationManagementSteps extends HttpStepSupport {
 
+    private boolean authenticatedRequest = true;
+
     @Given("the notification API route {string} {string}")
     public void theNotificationApiRoute(final String method, final String path) {
-        setAuthenticated(true);
+        setAuthenticated(authenticatedRequest);
         setRoute(method, path);
+    }
+
+    @Given("the notification request authentication is {string}")
+    public void theNotificationRequestAuthenticationIs(final String mode) {
+        authenticatedRequest = !"unauthenticated".equalsIgnoreCase(mode);
     }
 
     @Given("the notification request payload template is {string}")

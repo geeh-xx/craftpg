@@ -1,12 +1,12 @@
 package com.craftpg.infrastructure.security.campaignpermission;
 
-import org.jspecify.annotations.NonNull;
-
 import com.craftpg.infrastructure.persistence.repository.CampaignMembershipRepository;
 import com.craftpg.infrastructure.persistence.repository.CampaignRoleRepository;
-import java.util.UUID;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +22,9 @@ public class CampaignPermissionCheckerImpl implements CampaignPermissionChecker 
     @Override
     public boolean canViewCampaign(@NonNull final UUID campaignId, @NonNull final UUID userId) {
         return campaignMembershipRepository.existsByIdCampaignIdAndIdUserId(campaignId, userId)
-            || hasRole(campaignId, userId, "DM")
-            || hasRole(campaignId, userId, "MODERATOR")
-            || hasRole(campaignId, userId, "PLAYER");
+                || hasRole(campaignId, userId, "DM")
+                || hasRole(campaignId, userId, "MODERATOR")
+                || hasRole(campaignId, userId, "PLAYER");
     }
 
     @Override

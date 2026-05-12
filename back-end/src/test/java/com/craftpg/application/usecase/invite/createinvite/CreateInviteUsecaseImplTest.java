@@ -1,5 +1,24 @@
 package com.craftpg.application.usecase.invite.createinvite;
 
+import com.craftpg.application.notification.InviteEmailSender;
+import com.craftpg.domain.model.campaign.CampaignInvite;
+import com.craftpg.domain.model.notification.Notification;
+import com.craftpg.domain.model.user.AppUser;
+import com.craftpg.infrastructure.persistence.repository.AppUserRepository;
+import com.craftpg.infrastructure.persistence.repository.CampaignInviteRepository;
+import com.craftpg.infrastructure.persistence.repository.NotificationRepository;
+import com.craftpg.infrastructure.web.dto.CreateInviteRequest;
+import org.instancio.Instancio;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import static org.instancio.Select.field;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,24 +27,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import com.craftpg.application.notification.InviteEmailSender;
-import com.craftpg.domain.model.AppUser;
-import com.craftpg.domain.model.CampaignInvite;
-import com.craftpg.domain.model.Notification;
-import com.craftpg.infrastructure.persistence.repository.AppUserRepository;
-import com.craftpg.infrastructure.persistence.repository.CampaignInviteRepository;
-import com.craftpg.infrastructure.persistence.repository.NotificationRepository;
-import com.craftpg.infrastructure.web.dto.CreateInviteRequest;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import org.instancio.Instancio;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class CreateInviteUsecaseImplTest {
@@ -50,9 +51,9 @@ class CreateInviteUsecaseImplTest {
         // Given
         var campaignId = UUID.randomUUID();
         var command = Instancio.of(CreateInviteRequest.class)
-            .set(field(CreateInviteRequest::getEmail), "hero@craftpg.com")
-            .set(field(CreateInviteRequest::getRoles), List.of("DM"))
-            .create();
+                .set(field(CreateInviteRequest::getEmail), "hero@craftpg.com")
+                .set(field(CreateInviteRequest::getRoles), List.of("DM"))
+                .create();
 
         when(appUserRepository.findByEmailIgnoreCase(command.getEmail())).thenReturn(Optional.empty());
 
@@ -72,9 +73,9 @@ class CreateInviteUsecaseImplTest {
         // Given
         var campaignId = UUID.randomUUID();
         var command = Instancio.of(CreateInviteRequest.class)
-            .set(field(CreateInviteRequest::getEmail), "hero@craftpg.com")
-            .set(field(CreateInviteRequest::getRoles), List.of("player"))
-            .create();
+                .set(field(CreateInviteRequest::getEmail), "hero@craftpg.com")
+                .set(field(CreateInviteRequest::getRoles), List.of("player"))
+                .create();
         var user = mock(AppUser.class);
         when(user.getId()).thenReturn(UUID.randomUUID());
 

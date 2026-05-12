@@ -1,9 +1,10 @@
 package com.craftpg.application.usecase.notification.listnotification;
 
-import com.craftpg.domain.model.Notification;
+import com.craftpg.infrastructure.web.dto.NotificationResponse;
+
 import java.util.List;
 
 public interface ListNotificationUsecase {
 
-    List<Notification> execute();
+    List<NotificationResponse> execute();
 }

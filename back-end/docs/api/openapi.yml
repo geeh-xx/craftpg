@@ -10,19 +10,33 @@ paths:
   /campaigns:
     get:
       tags: [Campaigns]
-      operationId: campaignsGet
+      operationId: getAllPaginated
+      parameters:
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - in: query
+          name: size
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CampaignResponse'
+                $ref: '#/components/schemas/CampaignPageResponse'
     post:
       tags: [Campaigns]
-      operationId: campaignsPost
+      operationId: create
       requestBody:
         required: true
         content:
@@ -40,7 +54,7 @@ paths:
   /campaigns/{campaignId}:
     get:
       tags: [Campaigns]
-      operationId: campaignsCampaignIdGet
+      operationId: getById
       parameters:
         - in: path
           name: campaignId
@@ -55,7 +69,7 @@ paths:
                 $ref: '#/components/schemas/CampaignResponse'
     patch:
       tags: [Campaigns]
-      operationId: campaignsCampaignIdPatch
+      operationId: updateById
       parameters:
         - in: path
           name: campaignId
@@ -76,7 +90,7 @@ paths:
                 $ref: '#/components/schemas/CampaignResponse'
     delete:
       tags: [Campaigns]
-      operationId: campaignsCampaignIdDelete
+      operationId: deleteById
       parameters:
         - in: path
           name: campaignId
@@ -89,7 +103,7 @@ paths:
   /campaigns/{campaignId}/finish:
     post:
       tags: [Campaigns]
-      operationId: campaignsCampaignIdFinishPost
+      operationId: finishById
       parameters:
         - in: path
           name: campaignId
@@ -106,7 +120,7 @@ paths:
   /campaigns/{campaignId}/permissions:
     get:
       tags: [Campaigns]
-      operationId: campaignsCampaignIdPermissionsGet
+      operationId: getPermissionsByCampaignId
       parameters:
         - in: path
           name: campaignId
@@ -123,7 +137,7 @@ paths:
   /campaigns/{campaignId}/invites:
     get:
       tags: [Invites]
-      operationId: campaignsCampaignIdInvitesGet
+      operationId: getPendingInvitesByCampaignId
       parameters:
         - in: path
           name: campaignId
@@ -140,7 +154,7 @@ paths:
                   $ref: '#/components/schemas/PendingInviteResponse'
     post:
       tags: [Invites]
-      operationId: campaignsCampaignIdInvitesPost
+      operationId: createInviteByCampaignId
       parameters:
         - in: path
           name: campaignId
@@ -163,7 +177,7 @@ paths:
   /campaigns/{campaignId}/invites/{inviteId}:
     delete:
       tags: [Invites]
-      operationId: campaignsCampaignIdInvitesInviteIdDelete
+      operationId: cancelInviteByCampaignIdAndInviteId
       parameters:
         - in: path
           name: campaignId
@@ -180,7 +194,7 @@ paths:
   /invites/{token}:
     get:
       tags: [Invites]
-      operationId: invitesTokenGet
+      operationId: getInvitePreviewByToken
       security: []
       parameters:
         - in: path
@@ -198,7 +212,7 @@ paths:
   /invites/{token}/accept:
     post:
       tags: [Invites]
-      operationId: invitesTokenAcceptPost
+      operationId: acceptInviteByToken
       parameters:
         - in: path
           name: token
@@ -221,7 +235,7 @@ paths:
   /characters:
     get:
       tags: [Characters]
-      operationId: charactersGet
+      operationId: getAllCharacters
       responses:
         '200':
           description: OK
@@ -233,7 +247,7 @@ paths:
                   $ref: '#/components/schemas/CharacterResponse'
     post:
       tags: [Characters]
-      operationId: charactersPost
+      operationId: createCharacter
       requestBody:
         required: true
         content:
@@ -248,10 +262,59 @@ paths:
               schema:
                 $ref: '#/components/schemas/CharacterResponse'
 
+  /characters/{characterId}:
+    get:
+      tags: [Characters]
+      operationId: getCharacterById
+      parameters:
+        - in: path
+          name: characterId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterResponse'
+    put:
+      tags: [Characters]
+      operationId: updateCharacterById
+      parameters:
+        - in: path
+          name: characterId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCharacterRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterResponse'
+    delete:
+      tags: [Characters]
+      operationId: deleteCharacterById
+      parameters:
+        - in: path
+          name: characterId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204':
+          description: No Content
+
   /characters/generate-random:
     post:
       tags: [Characters]
-      operationId: charactersGenerateRandomPost
+      operationId: generateRandomCharacter
       responses:
         '201':
           description: Created
@@ -263,7 +326,7 @@ paths:
   /campaigns/{campaignId}/sessions:
     get:
       tags: [Sessions]
-      operationId: campaignsCampaignIdSessionsGet
+      operationId: getSessionsByCampaignId
       parameters:
         - in: path
           name: campaignId
@@ -280,7 +343,7 @@ paths:
                   $ref: '#/components/schemas/SessionResponse'
     post:
       tags: [Sessions]
-      operationId: campaignsCampaignIdSessionsPost
+      operationId: createSessionByCampaignId
       parameters:
         - in: path
           name: campaignId
@@ -303,7 +366,7 @@ paths:
   /campaigns/{campaignId}/sessions/{sessionId}:
     put:
       tags: [Sessions]
-      operationId: campaignsCampaignIdSessionsSessionIdPut
+      operationId: updateSessionByCampaignIdAndSessionId
       parameters:
         - in: path
           name: campaignId
@@ -330,7 +393,7 @@ paths:
   /campaigns/{campaignId}/characters/me:
     get:
       tags: [Characters]
-      operationId: campaignsCampaignIdCharactersMeGet
+      operationId: getMyCampaignCharacterByCampaignId
       parameters:
         - in: path
           name: campaignId
@@ -345,7 +408,7 @@ paths:
                 $ref: '#/components/schemas/CampaignCharacterResponse'
     patch:
       tags: [Characters]
-      operationId: campaignsCampaignIdCharactersMePatch
+      operationId: updateMyCampaignCharacterByCampaignId
       parameters:
         - in: path
           name: campaignId
@@ -368,7 +431,7 @@ paths:
   /campaigns/{campaignId}/characters/{campaignCharacterId}/xp:
     post:
       tags: [Characters]
-      operationId: campaignsCampaignIdCharactersCampaignCharacterIdXpPost
+      operationId: addXpToCampaignCharacter
       parameters:
         - in: path
           name: campaignId
@@ -395,7 +458,35 @@ paths:
   /notifications:
     get:
       tags: [Notifications]
-      operationId: notificationsGet
+      operationId: getAllNotifications
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationResponse'
+
+  /notifications/unread:
+    get:
+      tags: [Notifications]
+      operationId: getUnreadNotifications
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationResponse'
+
+  /notifications/read-all:
+    post:
+      tags: [Notifications]
+      operationId: markAllNotificationsAsRead
       responses:
         '200':
           description: OK
@@ -409,7 +500,7 @@ paths:
   /notifications/{notificationId}/read:
     post:
       tags: [Notifications]
-      operationId: notificationsNotificationIdReadPost
+      operationId: markNotificationAsReadById
       parameters:
         - in: path
           name: notificationId
@@ -426,7 +517,7 @@ paths:
   /me:
     get:
       tags: [Users]
-      operationId: meGet
+      operationId: getMe
       responses:
         '200':
           description: OK
@@ -436,7 +527,7 @@ paths:
                 $ref: '#/components/schemas/MeResponse'
     put:
       tags: [Users]
-      operationId: mePut
+      operationId: updateMe
       requestBody:
         required: true
         content:
@@ -471,8 +562,9 @@ components:
 
     UpdateCampaignRequest:
       type: object
-      required: [title, frequency, status, progressPercent]
+      required: [campaignId, title, frequency, status, progressPercent]
       properties:
+        campaignId: { type: string, format: uuid }
         title: { type: string }
         description: { type: string }
         frequency: { type: string }
@@ -490,6 +582,26 @@ components:
         frequency: { type: string }
         status: { type: string }
         progressPercent: { type: integer }
+
+    CampaignPageResponse:
+      type: object
+      required: [content, page, size, totalElements, totalPages, hasNext]
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignResponse'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+        hasNext:
+          type: boolean
 
     CampaignPermissionsResponse:
       type: object
@@ -557,6 +669,16 @@ components:
       type: object
       required: [name]
       properties:
+        name: { type: string }
+        race: { type: string }
+        clazz: { type: string }
+        attributesJson: { type: string }
+
+    UpdateCharacterRequest:
+      type: object
+      required: [characterId, name]
+      properties:
+        characterId: { type: string, format: uuid }
         name: { type: string }
         race: { type: string }
         clazz: { type: string }

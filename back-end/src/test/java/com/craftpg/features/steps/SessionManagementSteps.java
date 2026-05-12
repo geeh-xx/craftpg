@@ -65,8 +65,8 @@ public class SessionManagementSteps extends HttpStepSupport {
     public void theSessionResponseIsSuccessful() {
         final int responseStatus = getResponseStatus();
         Assertions.assertTrue(
-            responseStatus >= 200 && responseStatus < 300,
-            () -> "Expected 2xx status, but got " + responseStatus + ". Body: " + getResponseBody()
+                responseStatus >= 200 && responseStatus < 300,
+                () -> "Expected 2xx status, but got " + responseStatus + ". Body: " + getResponseBody()
         );
     }
 }

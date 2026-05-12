@@ -1,28 +1,40 @@
 package com.craftpg.application.usecase.campaign.finishcampaign;
 
-import com.craftpg.domain.model.Campaign;
-import com.craftpg.infrastructure.exception.ApiException;
+import com.craftpg.application.mapper.CampaignMapper;
+import com.craftpg.application.usecase.OperationResult;
+import com.craftpg.domain.model.campaign.CampaignID;
 import com.craftpg.infrastructure.persistence.repository.CampaignRepository;
 import com.craftpg.infrastructure.security.campaignpermission.CampaignPermissionAction;
 import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPermission;
-import org.jspecify.annotations.NonNull;
-import java.util.UUID;
+import com.craftpg.infrastructure.web.dto.CampaignResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class FinishCampaignUsecaseImpl implements FinishCampaignUsecase {
 
     private final CampaignRepository campaignRepository;
+    private final CampaignMapper campaignMapper;
 
     @Override
     @Transactional
     @RequireCampaignPermission(action = CampaignPermissionAction.FINISH)
-    public Campaign execute(@NonNull final UUID campaignId) {
-        var campaign = campaignRepository.findById(campaignId).orElseThrow(() -> new ApiException("campaign not found"));
-        campaign.finish();
-        return campaignRepository.save(campaign);
+    public OperationResult<CampaignResponse> execute(@NonNull final UUID campaignId) {
+
+        return campaignRepository.findById(CampaignID.of(campaignId))
+                .map(campaign -> {
+                    campaign.finish();
+
+                    var savedCampaign = campaignRepository.save(campaign);
+                    var response = campaignMapper.toResponse(savedCampaign);
+
+                    return OperationResult.ok(response);
+                })
+                .orElseGet(() -> OperationResult.error("campaign not found"));
     }
 }

@@ -1,19 +1,18 @@
 package com.craftpg.infrastructure.persistence.repository;
 
-import org.jspecify.annotations.NonNull;
+import com.craftpg.domain.model.campaign.CampaignRole;
+import com.craftpg.domain.model.campaign.CampaignRoleId;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.craftpg.domain.model.CampaignRole;
-import com.craftpg.domain.model.CampaignRoleId;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CampaignRoleRepository extends JpaRepository<CampaignRole, CampaignRoleId> {
 
-    List<CampaignRole> findByIdUserId(@NonNull final UUID userId);
+    List<CampaignRole> findByIdUserId(final UUID userId);
 
-    boolean existsByIdCampaignIdAndIdUserIdAndIdRole(@NonNull final UUID campaignId, @NonNull final UUID userId, @NonNull final String role);
+    boolean existsByIdCampaignIdAndIdUserIdAndIdRole(final UUID campaignId, final UUID userId, final String role);
 
-    Optional<CampaignRole> findFirstByIdCampaignIdAndIdRole(@NonNull UUID campaignId, @NonNull String role);
+    Optional<CampaignRole> findFirstByIdCampaignIdAndIdRole(UUID campaignId, String role);
 }

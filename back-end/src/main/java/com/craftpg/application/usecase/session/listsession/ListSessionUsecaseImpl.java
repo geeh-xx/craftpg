@@ -1,15 +1,16 @@
 package com.craftpg.application.usecase.session.listsession;
 
-import com.craftpg.domain.model.CampaignSession;
+import com.craftpg.domain.model.campaign.CampaignSession;
 import com.craftpg.infrastructure.persistence.repository.CampaignSessionRepository;
 import com.craftpg.infrastructure.security.campaignpermission.CampaignPermissionAction;
 import com.craftpg.infrastructure.security.campaignpermission.RequireCampaignPermission;
-import org.jspecify.annotations.NonNull;
-import java.util.List;
-import java.util.UUID;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

@@ -1,10 +1,11 @@
 package com.craftpg.infrastructure.security.currentuser;
 
 import com.craftpg.infrastructure.exception.ApiException;
-import java.util.UUID;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class CurrentUserProviderImpl implements CurrentUserProvider {

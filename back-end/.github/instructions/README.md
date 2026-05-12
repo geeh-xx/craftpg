@@ -93,14 +93,33 @@ When you work on files matching a specific path pattern, Copilot will automatica
   - Security definitions
   - Best practices for RESTful APIs
 
+## Available Agents
+
+### BDD Backend Scaffold (`bdd-backend-scaffold.agent.md`)
+- **Location**: `.github/agents/bdd-backend-scaffold.agent.md`
+- **Companion prompt**: `.github/prompts/bdd-backend-scaffold.prompt.md`
+- **Purpose**: Given a Cucumber `.feature` file, generate **all** backend layers end-to-end
+- **Workflow**:
+  1. Write (or open) a `.feature` file in `src/test/resources/features/<domain>/`
+  2. Run the **BDD Backend Scaffold** prompt (or agent) while the feature file is the active editor tab
+  3. The agent creates, in order: OpenAPI spec → domain model → repository → use case interfaces → use case implementations → mapper → controller → step definitions → unit tests
+
+### TDD Agents
+- **TDD Red** (`TDD-red.agent.md`) — writes the failing test
+- **TDD Green** (`TDD-green.agent.md`) — writes minimal implementation to pass
+- **TDD Refactor** (`TDD-refactor.agent.md`) — cleans up without changing behavior
+
+---
+
 ## Best Practices
 
-1. **TDD First**: Always write tests before production code — no exceptions
-2. **Cucumber per Feature**: Every feature must have a `.feature` file with Gherkin scenarios
-3. **Specificity**: Path-specific instructions should be focused on concerns specific to that layer or component type
-4. **Complementary**: These instructions complement the repository-wide instructions, not replace them
-5. **Maintenance**: Keep these instructions up to date as the codebase evolves
-6. **Consistency**: Ensure instructions across different files don't conflict with each other
+1. **BDD First**: Write the `.feature` file before any production code — use the **BDD Backend Scaffold** agent to generate the full stack
+2. **TDD First**: Always write tests before production code — no exceptions
+3. **Cucumber per Feature**: Every feature must have a `.feature` file with Gherkin scenarios
+4. **Specificity**: Path-specific instructions should be focused on concerns specific to that layer or component type
+5. **Complementary**: These instructions complement the repository-wide instructions, not replace them
+6. **Maintenance**: Keep these instructions up to date as the codebase evolves
+7. **Consistency**: Ensure instructions across different files don't conflict with each other
 
 ## Adding New Instructions
 

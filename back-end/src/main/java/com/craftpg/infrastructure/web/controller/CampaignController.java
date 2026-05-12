@@ -1,74 +1,91 @@
 package com.craftpg.infrastructure.web.controller;
 
-import org.jspecify.annotations.NonNull;
-
 import com.craftpg.application.mapper.CampaignMapper;
+import com.craftpg.application.usecase.campaign.CampaignManagementUseCase;
+import com.craftpg.application.usecase.campaign.finishcampaign.FinishCampaignUsecase;
+import com.craftpg.infrastructure.exception.api.InvalidResultException;
+import com.craftpg.infrastructure.factory.UseCaseProvider;
 import com.craftpg.infrastructure.security.campaignpermission.CampaignPermissionChecker;
 import com.craftpg.infrastructure.security.currentuser.CurrentUserProvider;
-import com.craftpg.application.usecase.campaign.createcampaign.CreateCampaignUsecase;
-import com.craftpg.application.usecase.campaign.deletecampaign.DeleteCampaignUsecase;
-import com.craftpg.application.usecase.campaign.finishcampaign.FinishCampaignUsecase;
-import com.craftpg.application.usecase.campaign.getcampaign.GetCampaignUsecase;
-import com.craftpg.application.usecase.campaign.listcampaign.ListCampaignUsecase;
-import com.craftpg.application.usecase.campaign.updatecampaign.UpdateCampaignUsecase;
 import com.craftpg.infrastructure.web.api.CampaignsApi;
+import com.craftpg.infrastructure.web.dto.CampaignPageResponse;
 import com.craftpg.infrastructure.web.dto.CampaignPermissionsResponse;
 import com.craftpg.infrastructure.web.dto.CampaignResponse;
 import com.craftpg.infrastructure.web.dto.CreateCampaignRequest;
 import com.craftpg.infrastructure.web.dto.UpdateCampaignRequest;
-import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
 public class CampaignController implements CampaignsApi {
 
-    private final ListCampaignUsecase listCampaignUsecase;
-    private final CreateCampaignUsecase createCampaignUsecase;
-    private final GetCampaignUsecase getCampaignUsecase;
-    private final UpdateCampaignUsecase updateCampaignUsecase;
-    private final DeleteCampaignUsecase deleteCampaignUsecase;
-    private final FinishCampaignUsecase finishCampaignUsecase;
+    private final UseCaseProvider useCaseProvider;
     private final CampaignMapper campaignMapper;
     private final CampaignPermissionChecker campaignPermissionChecker;
     private final CurrentUserProvider currentUserProvider;
 
     @Override
-    public ResponseEntity<List<CampaignResponse>> campaignsGet() {
-        return ResponseEntity.ok(listCampaignUsecase.execute().stream().map(campaignMapper::toResponse).toList());
+    public ResponseEntity<CampaignPageResponse> getAllPaginated(final Integer page, final Integer size) {
+        var result = useCaseProvider.getUseCase(CampaignManagementUseCase.class).findAll(PageRequest.of(page, size));
+
+        return result.getValue()
+                .map(campaignMapper::toPageResponse)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new InvalidResultException(result.getMessage()));
     }
 
     @Override
-    public ResponseEntity<CampaignResponse> campaignsPost(@NonNull final CreateCampaignRequest createCampaignRequest) {
-        return ResponseEntity.status(201).body(campaignMapper.toResponse(createCampaignUsecase.execute(createCampaignRequest)));
+    public ResponseEntity<CampaignResponse> create(final CreateCampaignRequest createCampaignRequest) {
+        var result = useCaseProvider.getUseCase(CampaignManagementUseCase.class).create(createCampaignRequest);
+
+        return result.getValue()
+                .map(response -> ResponseEntity.status(201).body(response))
+                .orElseThrow(() -> new InvalidResultException(result.getMessage()));
     }
 
     @Override
-    public ResponseEntity<CampaignResponse> campaignsCampaignIdGet(@NonNull final UUID campaignId) {
-        return ResponseEntity.ok(campaignMapper.toResponse(getCampaignUsecase.execute(campaignId)));
+    public ResponseEntity<CampaignResponse> getById(final UUID campaignId) {
+        var result = useCaseProvider.getUseCase(CampaignManagementUseCase.class).findById(campaignId);
+
+        return result.getValue()
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new InvalidResultException(result.getMessage()));
     }
 
     @Override
-    public ResponseEntity<CampaignResponse> campaignsCampaignIdPatch(@NonNull final UUID campaignId, @NonNull final UpdateCampaignRequest updateCampaignRequest) {
-        return ResponseEntity.ok(campaignMapper.toResponse(updateCampaignUsecase.execute(campaignId, updateCampaignRequest)));
+    public ResponseEntity<CampaignResponse> updateById(final UUID campaignId, final UpdateCampaignRequest updateCampaignRequest) {
+        updateCampaignRequest.setCampaignId(campaignId);
+        var result = useCaseProvider.getUseCase(CampaignManagementUseCase.class).update(updateCampaignRequest);
+
+        return result.getValue()
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new InvalidResultException(result.getMessage()));
     }
 
     @Override
-    public ResponseEntity<Void> campaignsCampaignIdDelete(@NonNull final UUID campaignId) {
-        deleteCampaignUsecase.execute(campaignId);
+    public ResponseEntity<Void> deleteById(final UUID campaignId) {
+        var result = useCaseProvider.getUseCase(CampaignManagementUseCase.class).delete(campaignId);
+        if (result.isNotSuccess()) {
+            throw new InvalidResultException(result.getMessage());
+        }
         return ResponseEntity.noContent().build();
     }
 
     @Override
-    public ResponseEntity<CampaignResponse> campaignsCampaignIdFinishPost(@NonNull final UUID campaignId) {
-        return ResponseEntity.ok(campaignMapper.toResponse(finishCampaignUsecase.execute(campaignId)));
+    public ResponseEntity<CampaignResponse> finishById(final UUID campaignId) {
+        var result = useCaseProvider.getUseCase(FinishCampaignUsecase.class).execute(campaignId);
+        return result.getValue()
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new InvalidResultException(result.getMessage()));
     }
 
     @Override
-    public ResponseEntity<CampaignPermissionsResponse> campaignsCampaignIdPermissionsGet(@NonNull final UUID campaignId) {
+    public ResponseEntity<CampaignPermissionsResponse> getPermissionsByCampaignId(final UUID campaignId) {
         final UUID userId = currentUserProvider.getCurrentUserId();
         final var response = new CampaignPermissionsResponse();
         response.setCanManageSessions(campaignPermissionChecker.canEditSession(campaignId, userId));

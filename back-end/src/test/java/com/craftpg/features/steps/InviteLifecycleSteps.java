@@ -1,25 +1,25 @@
 package com.craftpg.features.steps;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.craftpg.domain.input.CreateCampaignInput;
-import com.craftpg.domain.model.Campaign;
-import com.craftpg.domain.model.CampaignInvite;
-import com.craftpg.domain.model.CampaignRole;
+import com.craftpg.domain.model.campaign.Campaign;
+import com.craftpg.domain.model.campaign.CampaignInvite;
+import com.craftpg.domain.model.campaign.CampaignRole;
 import com.craftpg.infrastructure.persistence.repository.CampaignInviteRepository;
 import com.craftpg.infrastructure.persistence.repository.CampaignRepository;
 import com.craftpg.infrastructure.persistence.repository.CampaignRoleRepository;
 import com.craftpg.shared.constants.CampaignRoleType;
 import com.craftpg.shared.util.HashUtil;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.junit.jupiter.api.Assertions;
 
 public class InviteLifecycleSteps extends HttpStepSupport {
 
@@ -61,13 +61,14 @@ public class InviteLifecycleSteps extends HttpStepSupport {
     @Given("an existing campaign for the invite scenario")
     public void anExistingCampaignForTheInviteScenario() {
         Campaign campaign = campaignRepository.save(Campaign.create(new CreateCampaignInput(
-            "Cucumber invite campaign",
-            "desc",
-            "WEEKLY",
-            "ACTIVE",
-            25
+                CUCUMBER_USER_ID,
+                "Cucumber invite campaign",
+                "desc",
+                "WEEKLY",
+                "ACTIVE",
+                25
         )));
-        campaignRoleRepository.save(CampaignRole.create(campaign.getId(), CUCUMBER_USER_ID, CampaignRoleType.DM));
+        campaignRoleRepository.save(CampaignRole.create(campaign.getId().getValue(), CUCUMBER_USER_ID, CampaignRoleType.DM));
         campaignId = campaign.getId().toString();
     }
 
@@ -77,11 +78,11 @@ public class InviteLifecycleSteps extends HttpStepSupport {
         inviteToken = "cucumber-invite-token-" + java.util.UUID.randomUUID();
 
         campaignInviteRepository.save(CampaignInvite.create(
-            java.util.UUID.fromString(campaignId),
-            "invitee@craftpg.test",
-            HashUtil.sha256(inviteToken),
-            Set.of(CampaignRoleType.PLAYER),
-            LocalDateTime.now().plusDays(7)
+                java.util.UUID.fromString(campaignId),
+                "invitee@craftpg.test",
+                HashUtil.sha256(inviteToken),
+                Set.of(CampaignRoleType.PLAYER),
+                LocalDateTime.now().plusDays(7)
         ));
     }
 

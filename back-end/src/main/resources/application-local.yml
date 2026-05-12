@@ -1,26 +1,22 @@
-server:
-  port: 8080
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/craftpg
     username: craftpg
     password: craftpg
   mail:
-    host: ${APP_MAIL_HOST:localhost}
-    port: ${APP_MAIL_PORT:1025}
-    username: ${APP_MAIL_USER:}
-    password: ${APP_MAIL_PASS:}
+    host: localhost
+    port: 1025
+    username:
+    password:
     properties:
       mail:
         smtp:
-          auth: ${APP_MAIL_SMTP_AUTH:false}
+          auth: false
           starttls:
-            enable: ${APP_MAIL_SMTP_STARTTLS:false}
-  jpa:
-    open-in-view: false
+            enable: false
   liquibase:
-    change-log: classpath:db/changelogs/db.changelog-master.sql
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
   security:
     oauth2:
       resourceserver:
@@ -36,8 +32,8 @@ app:
       username: admin
       password: admin
   invite:
-    base-url: ${APP_INVITE_BASE_URL:http://localhost:3000/invites}
-    mail-from: ${APP_INVITE_MAIL_FROM:noreply@craftpg.local}
+    base-url: http://localhost:3000/invites
+    mail-from: noreply@craftpg.local
   minio:
     endpoint: http://localhost:9000
     region: us-east-1

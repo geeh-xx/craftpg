@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - include:
+      file: core/2026-02-27-core-init.sql
+      relativeToChangelogFile: true
+  - include:
+      file: core/2026-02-27-notifications-init.sql
+      relativeToChangelogFile: true
+  - include:
+      file: campaigns/2026-02-27-campaigns-init.sql
+      relativeToChangelogFile: true
+  - include:
+      file: campaigns/2026-03-06-campaigns-add-create-by.sql
+      relativeToChangelogFile: true
+  - include:
+      file: campaigns/2026-05-12-campaigns-add-version.sql
+      relativeToChangelogFile: true
+  - include:
+      file: invites/2026-02-27-invites-init.sql
+      relativeToChangelogFile: true
+  - include:
+      file: characters/2026-02-27-characters-init.sql
+      relativeToChangelogFile: true
+  - include:
+      file: sessions/2026-02-27-sessions-init.sql
+      relativeToChangelogFile: true

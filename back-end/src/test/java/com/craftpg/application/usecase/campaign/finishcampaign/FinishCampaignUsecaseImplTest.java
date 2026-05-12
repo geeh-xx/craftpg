@@ -1,28 +1,32 @@
 package com.craftpg.application.usecase.campaign.finishcampaign;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import com.craftpg.domain.model.Campaign;
-import com.craftpg.infrastructure.exception.ApiException;
+import com.craftpg.application.mapper.CampaignMapper;
+import com.craftpg.domain.model.campaign.Campaign;
+import com.craftpg.domain.model.campaign.CampaignID;
 import com.craftpg.infrastructure.persistence.repository.CampaignRepository;
-import java.util.Optional;
-import java.util.UUID;
+import com.craftpg.infrastructure.web.dto.CampaignResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class FinishCampaignUsecaseImplTest {
 
     @Mock
     private CampaignRepository campaignRepository;
+
+    @Mock
+    private CampaignMapper campaignMapper;
 
     @InjectMocks
     private FinishCampaignUsecaseImpl usecase;
@@ -32,28 +36,31 @@ class FinishCampaignUsecaseImplTest {
         // Given
         var campaignId = UUID.randomUUID();
         var campaign = mock(Campaign.class);
-        when(campaignRepository.findById(campaignId)).thenReturn(Optional.of(campaign));
+        var response = mock(CampaignResponse.class);
+        when(campaignRepository.findById(CampaignID.of(campaignId))).thenReturn(Optional.of(campaign));
         when(campaignRepository.save(campaign)).thenReturn(campaign);
+        when(campaignMapper.toResponse(campaign)).thenReturn(response);
 
         // When
         var result = usecase.execute(campaignId);
 
         // Then
-        assertSame(campaign, result);
+        assertEquals(response, result.getValue().orElseThrow());
         verify(campaign).finish();
         verify(campaignRepository).save(campaign);
+        verify(campaignMapper).toResponse(campaign);
     }
 
     @Test
-    void execute_missingCampaign_throwsApiException() {
+    void execute_missingCampaign_returnsErrorResult() {
         // Given
         var campaignId = UUID.randomUUID();
-        when(campaignRepository.findById(campaignId)).thenReturn(Optional.empty());
+        when(campaignRepository.findById(CampaignID.of(campaignId))).thenReturn(Optional.empty());
 
         // When
-        var exception = assertThrows(ApiException.class, () -> usecase.execute(campaignId));
+        var result = usecase.execute(campaignId);
 
         // Then
-        assertEquals("campaign not found", exception.getMessage());
+        assertEquals("campaign not found", result.getMessage());
     }
 }
